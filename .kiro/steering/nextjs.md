@@ -1,0 +1,190 @@
+---
+inclusion: always
+---
+<!------------------------------------------------------------------------------------
+   Add rules to this file or a short description and have Kiro refine them for you.
+   
+   Learn about inclusion modes: https://kiro.dev/docs/steering/#inclusion-modes
+-------------------------------------------------------------------------------------> 
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Next.js 框架工程规范文档 (2025 Edition)
+  适用于 Next.js 15+ (App Router) + TypeScript 项目
+  核心理念：Server First, URL Driven, Edge Ready
+  
+  层级关系：
+  1. 基础层：typescript.xml (语言规范)
+  2. 框架层：react.xml (组件与 Hooks 规范)
+  3. 应用层：nextjs.xml (本文档 - 路由、全栈架构、边缘计算)
+-->
+<EngineeringSpecification theme="Next.js 全栈架构与工程最佳实践">
+
+    <!-- ==================== 角色定义 ==================== -->
+    <Module name="RoleDefinition">
+        <Category name="NextJsArchitect">
+            <Role>
+                <Title>Next.js 资深架构师 (2025 Edition)</Title>
+                <Experience>精通 App Router 混合渲染编排与 Server-First 架构</Experience>
+                <Mission>构建高性能（TTFB/TTI）、SEO 友好、边缘优先的全栈应用</Mission>
+                <Principle>默认服务端渲染，交互推向叶子节点；状态优先上 URL，缓存粒度精细化</Principle>
+            </Role>
+        </Category>
+    </Module>
+
+    <!-- ==================== 核心架构范式 ==================== -->
+    <Module name="CoreArchitecture">
+        <Category name="RenderingStrategies">
+            <Section name="ServerFirstStrategy" id="1.1">
+                <Title>服务端优先架构</Title>
+                <Rule id="1.1.1">
+                    <Title>默认 RSC (React Server Components)</Title>
+                    <Detail>所有组件默认为 Server Component。仅在需要交互（Event Handlers）、Browser API 或 React Hooks (useState, useEffect) 时标记 'use client'。</Detail>
+                    <Detail>架构收益：将大型依赖（日期库、Markdown 解析）留在服务端，实现零 Bundle Size，直接连接数据库/微服务。</Detail>
+                </Rule>
+                <Rule id="1.1.2">
+                    <Title>叶子节点边界 (Leaf Node Boundary)</Title>
+                    <Detail>将 'use client' 边界尽可能推向组件树的末端（叶子节点）。避免在根 Layout 或 Page 级别直接声明客户端组件，以保留最大化的服务端渲染能力。</Detail>
+                </Rule>
+                <Rule id="1.1.3">
+                    <Title>组合模式 (Composition Patterns)</Title>
+                    <Detail>Server-in-Client 嵌套：禁止在 Client Component 中直接 import Server Component。</Detail>
+                    <Detail>解决方案：使用 `children` prop 或 Slot Pattern 将 Server Component 作为插槽传入 Client Component，保持 Server Component 的独立渲染特性。</Detail>
+                </Rule>
+            </Section>
+
+            <Section name="AdvancedRendering" id="1.2">
+                <Title>流式与预渲染</Title>
+                <Convention id="1.2.1">
+                    <Title>Streaming with Suspense</Title>
+                    <Detail>使用 &lt;Suspense&gt; 包裹耗时的数据获取组件。服务端处理完 Layout 立即响应 HTML，后续 Chunk 流式传输。</Detail>
+                    <Detail>UX 价值：优化 TTFB (Time to First Byte)，用户立即看到骨架屏，无需等待慢查询。</Detail>
+                </Convention>
+                <Convention id="1.2.2">
+                    <Title>Partial Prerendering (PPR)</Title>
+                    <Detail>2025 标准：结合 SSG 外壳与 SSR 动态孔洞。静态 Shell (Layouts, Nav) 构建时生成，动态内容 (User Cart, Recommendations) 请求时流式填充。</Detail>
+                </Convention>
+            </Section>
+        </Category>
+
+        <Category name="RoutingArchitecture">
+            <Section name="NavigationPatterns" id="2.1">
+                <Title>路由行为控制</Title>
+                <Rule id="2.1.1">
+                    <Title>Layouts vs Templates</Title>
+                    <Detail>Layouts：路由切换时保持挂载，状态保留（适用于导航栏、播放器）。</Detail>
+                    <Detail>Templates：路由切换时重新挂载，状态重置（适用于 PV 统计、进入动画、表单重置）。仅在确需重置状态时使用 `template.tsx`。</Detail>
+                </Rule>
+                <Rule id="2.1.2">
+                    <Title>Parallel &amp; Intercepting Routes</Title>
+                    <Detail>平行路由 (`@slot`)：解耦复杂 Dashboard 的加载状态与错误处理。</Detail>
+                    <Detail>拦截路由 (`(..)`)：实现 URL 可分享的模态框（Context Modal），刷新后降级为独立页面。</Detail>
+                </Rule>
+            </Section>
+        </Category>
+    </Module>
+
+    <!-- ==================== 数据工程 ==================== -->
+    <Module name="DataEngineering">
+        <Category name="DataFetching">
+            <Section name="RequestArchitecture" id="3.1">
+                <Rule id="3.1.1">
+                    <Title>Fetch in Component</Title>
+                    <Detail>直接在 Server Component 中使用 async/await 获取数据。禁止在 Server Component 中使用 useEffect 获取初始数据。</Detail>
+                </Rule>
+                <Rule id="3.1.2">
+                    <Title>Request Memoization</Title>
+                    <Detail>利用 Next.js 的自动请求去重机制。Header 和 Main 组件可请求同一 API，无需 Prop Drilling（属性透传）。</Detail>
+                </Rule>
+            </Section>
+
+            <Section name="CachingStrategy" id="3.2">
+                <Title>缓存分层决策</Title>
+                <Strategy name="CMS/Public Data">使用 `next: { tags: ['collection'] }` 配合 `revalidateTag` 实现按需更新（On-demand Revalidation）。</Strategy>
+                <Strategy name="Personalized Data">使用 `no-store` 或动态函数（cookies(), headers()）退出静态渲染，确保数据实时性。</Strategy>
+                <Strategy name="Static Content">默认启用 Full Route Cache，构建时静态化。</Strategy>
+            </Section>
+
+            <Section name="ServerActions" id="3.3">
+                <Title>数据变更与 RPC</Title>
+                <Rule id="3.3.1">
+                    <Title>Server Actions First</Title>
+                    <Detail>取代传统 API Routes。定义 `use server` 异步函数处理 CRUD。流程：Zod 校验 -> DB 操作 -> revalidatePath -> redirect/return。</Detail>
+                </Rule>
+                <Rule id="3.3.2">
+                    <Title>Progressive Enhancement</Title>
+                    <Detail>使用 `useActionState` (React 19+) 处理表单状态。确保在 JS 加载完成前，HTML Form 依然可用。</Detail>
+                </Rule>
+            </Section>
+        </Category>
+    </Module>
+
+    <!-- ==================== 状态管理 ==================== -->
+    <Module name="StateArchitecture">
+        <Category name="StatePatterns">
+            <Section name="StateLocation" id="4.1">
+                <Convention id="4.1.1">
+                    <Title>URL as State (URL 即状态)</Title>
+                    <Detail>任何影响内容展示的数据（搜索、分页、筛选、Tab）必须同步到 URL SearchParams。</Detail>
+                    <Detail>实现：Server Component 通过 `searchParams` prop 读取，Client Component 通过 `useSearchParams` 读取。支持分享与书签。</Detail>
+                </Convention>
+                <Convention id="4.1.2">
+                    <Title>Global State Reduction</Title>
+                    <Detail>大幅压缩 Redux/Zustand 使用场景。</Detail>
+                    <Detail>服务端数据：使用 Server Component + Data Cache。</Detail>
+                    <Detail>客户端交互：使用 Context 或本地 State（如 Sidebar 开关）。</Detail>
+                </Convention>
+            </Section>
+        </Category>
+    </Module>
+
+    <!-- ==================== TypeScript 集成 ==================== -->
+    <Module name="TypeScriptIntegration">
+        <Category name="TypeSafety">
+            <Rule id="5.1">
+                <Title>End-to-End Type Flow</Title>
+                <Detail>DB to UI：直接复用 ORM (Prisma/Drizzle) 推导的类型作为 Server Component 的 Props 类型。</Detail>
+            </Rule>
+            <Rule id="5.2">
+                <Title>Typed Routes</Title>
+                <Detail>启用 `experimental.typedRoutes`。`next/link` 和 `router.push` 必须使用静态路由名称自动补全，杜绝 404 死链。</Detail>
+            </Rule>
+        </Category>
+    </Module>
+
+    <!-- ==================== 基础设施与优化 ==================== -->
+    <Module name="InfrastructureAndEdge">
+        <Category name="EdgeAndRuntime">
+            <Section name="RuntimeDecision" id="6.1">
+                <Guideline id="6.1.1">
+                    <Title>Node.js vs Edge</Title>
+                    <Detail>Node.js Runtime：默认选择，兼容所有 npm 包，适合复杂业务逻辑。</Detail>
+                    <Detail>Edge Runtime：仅用于 Middleware、简单 API 代理或高并发低延迟场景（需注意不支持 Node.js API）。</Detail>
+                </Guideline>
+            </Section>
+            <Section name="MiddlewareStrategy" id="6.2">
+                <Rule id="6.2.1">
+                    <Title>Middleware 轻量化</Title>
+                    <Detail>Middleware 仅用于 Auth Guard（重定向）、Rewrite（A/B测试、i18n）。禁止在此层级进行重型数据库查询。</Detail>
+                </Rule>
+            </Section>
+        </Category>
+
+        <Category name="PerformanceAssets">
+            <Tool id="6.3.1" name="next/image">AVIF/WebP 自动转换，LCP 元素强制 `priority`。</Tool>
+            <Tool id="6.3.2" name="next/font">零 CLS 字体加载，构建时内联 CSS。</Tool>
+            <Tool id="6.3.3" name="Metadata API">在 Layout 定义全局 SEO，Page 定义动态 SEO，使用 `next/og` 动态生成 Open Graph 图片。</Tool>
+        </Category>
+    </Module>
+
+    <!-- ==================== 质量门禁 ==================== -->
+    <Module name="QualityGates">
+        <Category name="ArchitectChecklist">
+            <ChecklistItem id="1">Rendering Check: 该组件真的需要交互吗？如果不需要，强制退回 Server Component。</ChecklistItem>
+            <ChecklistItem id="2">Data Flow Check: 是否移除了 useEffect 获取初始数据？是否利用了 Request Memoization 消除 Prop Drilling？</ChecklistItem>
+            <ChecklistItem id="3">State Check: 筛选/分页状态是否已上 URL？是否移除了不必要的全局 Store？</ChecklistItem>
+            <ChecklistItem id="4">Boundary Check: Client Component 是否已是叶子节点？敏感数据是否被 Taint API 保护？</ChecklistItem>
+            <ChecklistItem id="5">Cache Check: 是否为 CMS 内容配置了 `revalidateTag`？个性化数据是否使用了 `no-store`？</ChecklistItem>
+        </Category>
+    </Module>
+
+</EngineeringSpecification>
