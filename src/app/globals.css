@@ -12,7 +12,7 @@
   body {
     /* 强制黑色背景，白色文字 */
     @apply bg-background text-text-primary antialiased;
-    
+
     /* 优化字体渲染，让细字体在黑底上更清晰 */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -24,7 +24,7 @@
   .glass-panel {
     @apply bg-black/50 backdrop-blur-md border-b border-border;
   }
-  
+
   /* 定义 Vercel 风格卡片的标准类 */
   .vercel-card {
     @apply rounded-lg border border-border bg-surface p-6 transition-colors duration-200 hover:border-border-hover;

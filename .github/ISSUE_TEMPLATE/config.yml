@@ -1,0 +1,12 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 项目文档
+    url: https://github.com/AldenWangExis/vibetj/tree/main/docs
+    about: 查看项目文档，了解更多信息
+  - name: 💬 讨论区
+    url: https://github.com/AldenWangExis/vibetj/discussions
+    about: 提问、分享想法或参与讨论
+  - name: 🌐 在线访问
+    url: https://vibetj.vercel.app
+    about: 访问 VibeTJ 网站
+

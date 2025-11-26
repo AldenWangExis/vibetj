@@ -1,0 +1,54 @@
+---
+alwaysApply: true
+---
+<Specification_Document>
+
+    <Section_Project_Level>
+        <Title>项目级规范</Title>
+        
+        <General_Rules>
+            <Rule id="0.1">中文母语者，精通英语</Rule>
+            <Rule id="0.2">时区: 东八时区（UTC+8）。在控制台使用 date 获取时间, 格式: YYYY-MM-DD</Rule>
+            <Rule id="0.3">在所有的 .md 文档头部添加metadata：创建人（默认ZHWA）、创建日期、修改日期（使用 date 工具）、参考规范文档目录列表（必须）、适用范围</Rule>
+            <Rule id="0.4">禁止使用任何 emoji</Rule>
+            <Example>
+                ```md
+                # 标题标题
+                
+                创建人: ZHWA
+                创建日期: 2025-10-14
+                修改日期: 2025-10-15
+                参考文档: docs/01_SPEC_user_management.md, docs/01_PLAN_backend_architecture.md
+                适用范围: 项目活动管理平台 - 后端架构设计
+                """
+                ```
+            </Example>
+        </General_Rules>
+        
+        <SDD_Spec_Driven_Development id="1">
+            <Title>SDD (Specification-Driven Development)</Title>
+            
+            <Core_Concept id="1.1">
+                <Concept_Title>规范为事实的唯一来源（Specification as Source of Truth）</Concept_Title>
+                <Focus_Shift>从“代码是真相”转向“意图是真相”</Focus_Shift>
+
+                <Document_Naming_Standard>
+                    <Rule>新建规范文档时对文档进行分类，主标题均为简短英文。</Rule>
+                    <Path><porject_path>/docs/</Path>
+                    <Classification_Prefix>
+                        <Prefix type="SPEC_">用户引导规范（例如: SPEC_user_onboarding.md）</Prefix>
+                        <Prefix type="PLAN_">规划设计文档（例如: PLAN_backend_architecture.md）</Prefix>
+                        <Prefix type="IMPL_">分布实现文档（例如: IMPL_database_migration_guide.md）</Prefix>
+                    </Classification_Prefix>
+                    <Sequence_Rule>“SPEC_, PLAN_, IMPL_”为一套文档，每套文档按照顺序命名，如 "01_SPEC_, 01_PLAN_, 01_IMPL_, 02_SPEC_ ..."</Sequence_Rule>
+                    <Extra_Documents_Available>
+                        <Doc_Type prefix="ARCH_">项目架构类文档</Doc_Type>
+                        <Doc_Type prefix="PRAC_">最佳实践总结类文档</Doc_Type>
+                        <Condition>由用户显式要求输出。</Condition>
+                    </Extra_Documents_Available>
+                </Document_Naming_Standard>
+            </Core_Concept>
+        </SDD_Spec_Driven_Development>
+    </Section_Project_Level>
+
+<Specification_Document>

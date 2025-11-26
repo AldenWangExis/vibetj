@@ -1,0 +1,50 @@
+name: Auto Assign
+
+on:
+  pull_request:
+    types: [opened]
+  issues:
+    types: [opened]
+
+jobs:
+  auto-assign:
+    name: Auto Assign to Maintainers
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Assign PR to maintainer
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: ['AldenWangExis']
+            })
+
+      - name: Assign Issue to maintainer
+        if: github.event_name == 'issues'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: ['AldenWangExis']
+            })
+
+      - name: Add labels for member requests
+        if: contains(github.event.issue.title, '加入成员') || contains(github.event.pull_request.title, 'add') && contains(github.event.pull_request.title, 'member')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['member-request']
+            })
+
