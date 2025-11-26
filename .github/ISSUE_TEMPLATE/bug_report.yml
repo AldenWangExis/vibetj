@@ -1,0 +1,92 @@
+name: Bug 报告
+description: 报告网站的问题或错误
+title: "[Bug] "
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 感谢你的反馈！
+        
+        请详细描述你遇到的问题，这将帮助我们更快地定位和修复。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 清晰简洁地描述问题是什么
+      placeholder: 例如：点击成员卡片时，页面没有跳转到 GitHub
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 如何复现这个问题？
+      placeholder: |
+        1. 访问 'https://vibetj.vercel.app/members'
+        2. 点击某个成员的卡片
+        3. 观察页面行为
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+      description: 你期望发生什么？
+      placeholder: 例如：应该在新标签页打开成员的 GitHub 主页
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+      description: 实际发生了什么？
+      placeholder: 例如：点击后没有任何反应
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图或录屏
+      description: 如果适用，添加截图或录屏来帮助解释问题
+      placeholder: 拖拽图片或视频到这里
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: 浏览器
+      description: 你使用的浏览器
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - 其他
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: 设备类型
+      description: 你使用的设备
+      options:
+        - 桌面端
+        - 移动端
+        - 平板
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 补充信息
+      description: 其他任何有助于解决问题的信息
+      placeholder: 例如：浏览器版本、操作系统、网络环境等
+

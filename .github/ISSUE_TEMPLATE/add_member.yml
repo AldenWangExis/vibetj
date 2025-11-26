@@ -1,0 +1,72 @@
+name: 申请加入 VibeTJ 成员
+description: 通过 Issue 申请加入 VibeTJ 团队成员列表
+title: "[加入成员] "
+labels: ["member-request"]
+assignees:
+  - AldenWangExis
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 欢迎加入 VibeTJ！
+        
+        感谢你对 VibeTJ 的关注。请填写以下信息，我们会尽快审核并添加你到成员列表。
+        
+        **推荐方式**：如果你熟悉 Git 操作，建议直接提交 Pull Request，这样更快更透明。
+        详见：[如何通过 PR 加入](https://github.com/AldenWangExis/vibetj#方式一通过-pull-request推荐)
+
+  - type: input
+    id: github-username
+    attributes:
+      label: GitHub 用户名
+      description: 你的 GitHub 用户名（必填）
+      placeholder: 例如：octocat
+    validations:
+      required: true
+
+  - type: input
+    id: custom-bio
+    attributes:
+      label: 自定义签名
+      description: 一句话介绍自己（可选）。如果不填写，将使用你的 GitHub Bio。
+      placeholder: 例如：全栈工程师 | 开源爱好者
+
+  - type: textarea
+    id: introduction
+    attributes:
+      label: 自我介绍
+      description: 简单介绍一下自己，说明为什么想加入 VibeTJ（可选）
+      placeholder: |
+        例如：
+        - 我是一名前端工程师，热爱开源
+        - 对 Next.js 和 React 有深入研究
+        - 希望加入 VibeTJ 团队，共同学习进步
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 确认事项
+      description: 请确认以下事项
+      options:
+        - label: 我已阅读 [README.md](https://github.com/AldenWangExis/vibetj/blob/main/README.md)
+          required: true
+        - label: 我的 GitHub 账号信息是公开的（头像、昵称等）
+          required: true
+        - label: 我同意我的信息会被展示在 VibeTJ 网站上
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ### 接下来会发生什么？
+        
+        1. 维护者会审核你的申请
+        2. 审核通过后，会将你的信息添加到 `src/config/members.ts`
+        3. 代码合并后，你的信息会在 1 小时内出现在网站上
+        4. 你可以在 https://vibetj.vercel.app/members 查看
+        
+        感谢你的耐心等待！
+
