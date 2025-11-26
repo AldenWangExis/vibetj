@@ -35,19 +35,7 @@ VibeTJ 是一个基于 GitOps 理念构建的团队成员展示平台。我们�
 - 点击卡片直接跳转到成员的 GitHub 主页
 - 工业极简主义设计风格（Vercel / Geist Design System）
 
-### 2. GitOps 驱动
-
-- 成员列表存储在代码仓库的配置文件中
-- 通过 GitHub API 自动富化成员信息
-- 支持自定义签名覆盖 GitHub 默认 Bio
-- 1 小时增量静态再生成（ISR），平衡性能与时效性
-
-### 3. 高性能
-
-- 基于 Next.js 15 和 React Server Components
-- 服务端渲染优化 SEO
-- 流式渲染优化首屏加载速度
-- 图片优化和零 CLS 字体加载
+### 2.待探索 ...
 
 ---
 
