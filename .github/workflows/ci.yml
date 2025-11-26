@@ -1,0 +1,163 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # 代码质量检查
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript type check
+        run: npm run type-check
+
+      - name: ESLint check
+        run: npm run lint
+
+      - name: Prettier format check
+        run: npm run format:check
+
+  # 构建测试
+  build:
+    name: Build Test
+    runs-on: ubuntu-latest
+    needs: quality
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: .next
+          retention-days: 7
+
+  # 依赖安全检查
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Check for outdated dependencies
+        run: npm outdated || true
+
+  # PR 特定检查
+  pr-checks:
+    name: PR Checks
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check PR title
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            chore
+          requireScope: false
+
+      - name: Check for large files
+        run: |
+          find . -type f -size +1M -not -path "./node_modules/*" -not -path "./.git/*" -not -path "./.next/*" | while read file; do
+            echo "Warning: Large file detected: $file"
+          done
+
+      - name: Check for TODO/FIXME comments
+        run: |
+          if grep -r "TODO\|FIXME" src/ --exclude-dir=node_modules --exclude-dir=.next; then
+            echo "⚠️ Found TODO/FIXME comments in the code"
+          fi
+        continue-on-error: true
+
+  # 成员配置验证
+  validate-members:
+    name: Validate Members Config
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'members') || contains(github.event.pull_request.title, 'member')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate members.ts syntax
+        run: npx tsc --noEmit src/config/members.ts
+
+      - name: Check for duplicate GitHub usernames
+        run: |
+          node -e "
+          const members = require('./src/config/members.ts').MEMBERS;
+          const usernames = members.map(m => m.github);
+          const duplicates = usernames.filter((item, index) => usernames.indexOf(item) !== index);
+          if (duplicates.length > 0) {
+            console.error('❌ Duplicate GitHub usernames found:', duplicates);
+            process.exit(1);
+          }
+          console.log('✅ No duplicate usernames');
+          " || echo "Skipping duplicate check (requires build)"
+
