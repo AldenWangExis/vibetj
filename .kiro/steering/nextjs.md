@@ -107,12 +107,37 @@ inclusion: always
             <Section name="ServerActions" id="3.3">
                 <Title>数据变更与 RPC</Title>
                 <Rule id="3.3.1">
-                    <Title>Server Actions First</Title>
-                    <Detail>取代传统 API Routes。定义 `use server` 异步函数处理 CRUD。流程：Zod 校验 -> DB 操作 -> revalidatePath -> redirect/return。</Detail>
+                    <Title>Server Actions as Controllers</Title>
+                    <Detail>Server Actions 应仅充当“控制器”角色，负责 HTTP 上下文处理。</Detail>
+                    <Detail>标准流程：Request Parsing (Zod) -> **Call Service Layer (调用服务层)** -> Revalidate/Redirect -> Error Handling。</Detail>
+                    <Detail>禁止：在 Server Action 中直接编写复杂的 SQL 事务或业务计算逻辑。</Detail>
                 </Rule>
                 <Rule id="3.3.2">
                     <Title>Progressive Enhancement</Title>
                     <Detail>使用 `useActionState` (React 19+) 处理表单状态。确保在 JS 加载完成前，HTML Form 依然可用。</Detail>
+                </Rule>
+            </Section>
+        </Category>
+    </Module>
+
+    <Module name="BusinessLogicArchitecture">
+        <Category name="LayeringStrategy">
+            <Section name="LogicOrganization" id="2.5">
+                <Title>业务逻辑分层决策</Title>
+                <Rule id="2.5.1">
+                    <Title>默认模式：模块化服务层 (Modular Service Layer)</Title>
+                    <Detail>标准架构：Next.js 项目默认采用 Non-DDD 的服务层模式。即 `Server Action (Controller)` -> `Service (Business Logic)` -> `DAL (Data Access)`。</Detail>
+                    <Detail>设计考量：避免在 Server Actions 或 Route Handlers 中直接编写复杂业务逻辑，也不要过早引入 DDD 的繁琐仪式感（Entity/Repository）。逻辑应封装在纯函数服务中。</Detail>
+                </Rule>
+                <Rule id="2.5.2">
+                    <Title>DDD (领域驱动设计) 熔断机制</Title>
+                    <Detail>仅在以下场景升级为 DDD：核心业务逻辑极度复杂（如复式记账、复杂状态机流转）、业务生命周期预计超过 3 年、且需要脱离 UI 框架进行高覆盖率单元测试。</Detail>
+                    <Detail>边界约束：若引入 Domain 层，严禁 Domain 对象依赖 `next/*` 或 `react`。</Detail>
+                </Rule>
+                <Rule id="2.5.3">
+                    <Title>Service 层纯净性 (Framework Agnostic)</Title>
+                    <Detail>Service 层代码必须由纯 TypeScript 构成。</Detail>
+                    <Detail>禁止：在 `src/services` 内部导入 `next/headers`, `next/navigation` 或 React Hooks。所有上下文（如 CurrentUser, RequestId）必须作为参数传入，而非在内部读取。</Detail>
                 </Rule>
             </Section>
         </Category>

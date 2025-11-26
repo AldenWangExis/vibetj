@@ -100,6 +100,7 @@ inclusion: always
                     <Detail>构建：Vite（开发服务器 + 生产构建）</Detail>
                     <Detail>测试：Vitest（*.spec.ts 或 *.test.ts，覆盖率 ≥ 80%）</Detail>
                     <Detail>校验：Zod（外部数据边界：API 响应、表单、配置文件）</Detail>
+                    <Detail>样式：Tailwind CSS 3.x（原子化实用类优先，通过 tailwind.config.ts 约束设计系统，禁用任意值写法）</Detail>
                     <Detail>日期：date-fns 或 Day.js（后端交互统一 ISO 8601）</Detail>
                 </Convention>
             </Section>
@@ -153,6 +154,7 @@ inclusion: always
                 <ChecklistItem id="4">性能：并发请求 Promise.all，大数据集虚拟化/分页，动态 import 代码分割</ChecklistItem>
                 <ChecklistItem id="5">文档：模块注释（职责、示例、依赖），公共 API JSDoc（@throws, @example）</ChecklistItem>
                 <ChecklistItem id="6">安全：无硬编码敏感信息，环境变量管理配置</ChecklistItem>
+                <ChecklistItem id="7">样式规范：使用 Tailwind 语义类，避免复杂行内样式，提取复杂组合为 @apply 或组件</ChecklistItem>
             </Section>
 
             <Section name="命名与风格">

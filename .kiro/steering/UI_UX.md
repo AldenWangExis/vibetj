@@ -6,106 +6,110 @@ inclusion: always
    
    Learn about inclusion modes: https://kiro.dev/docs/steering/#inclusion-modes
 -------------------------------------------------------------------------------------> 
-你好！作为设计师，我非常乐意将这份**“光落心间 (Light Falls Within)”**的设计语言固化下来。
+### 🎨 Vercel 风格设计规范 (The Geist Style)
 
-这份文档不仅是 UI 规范，更是我们产品的**视觉宪章**。它将指导你在后续开发中，面对“这个按钮放哪里”、“这里用什么颜色”等决策时，能迅速找到依据。
+**核心设计哲学：**
+**“工业级的极简主义 (Industrial Minimalism)。”**
+Vercel 的界面不是为了“好看”而设计的，而是为了**效率、清晰度和高性能**。它给人的感觉是精密的、数学化的、以开发者为中心的。每一个像素都有其存在的理由。
 
-请在你的项目根目录创建一个 `UI_UX.md` 文件，并填入以下内容：
+#### 1. 色彩体系：关于“黑”的五种层次
+Vercel 的暗色模式不是纯黑，而是**基于边框和层级**的深灰色阶。
 
----
+*   **背景 (Background):** 纯黑 (`#000000`) 或极深灰 (`#0A0A0A`)。
+*   **表面/卡片 (Surfaces):** 透明或极低透明度的背景，通过 **1px 的边框**来区分，而不是靠背景色块。
+*   **边框 (Borders):** 这是灵魂。使用非常细微的灰色 (`#333333` 或 `rgba(255,255,255,0.15)`)。**Vercel 的层次感 90% 来自于边框，而不是阴影。**
+*   **文字 (Typography Colors):**
+    *   主要标题：纯白 (`#FFFFFF`)。
+    *   次要信息/描述：中灰 (`#888888` 或 `#A1A1A1`)。
+    *   低优先级/占位符：深灰 (`#444444`)。
+*   **强调色 (Accents):** 极度克制。只有 Logo、Status（状态点）或选中的 Focus 状态才会出现颜色（通常是白色发光、Vercel 绿、或者错误红）。
 
-# 🎨 Design System: Light Falls Within (光落心间)
+#### 2. 布局与空间 (Layout & Spacing)
+*   **网格系统 (Grid):** 严格对齐。卡片之间有固定的间距（通常是 16px 或 24px）。
+*   **留白 (Whitespace):** 内部留白（Padding）要大方。卡片内部内容不要贴边，通常保持 `p-6` (24px) 或 `p-4` (16px) 的内边距。
+*   **密集度:** 即使留白多，信息密度依然很高（Information Dense），通过小字号和紧凑的行高实现。
 
-> **"Even a faint light can reach the softest corners."**
-> **哪怕只是微光，也能照亮柔软的角落。**
+#### 3. 字体排印 (Typography)
+*   **字体家族:** 使用 **Inter** 或 Vercel 自家的 **Geist Sans**。这是一种无衬线字体，具有极高的可读性。
+*   **代码字体:** Commit Hash（如 `8c5a2b`）、分支名（`main`）必须使用等宽字体（Monospace），如 **Geist Mono** 或 **Fira Code**。
+*   **字重与字号:**
+    *   标题：小而粗（Bold, 14px-16px）。不要用巨大的标题，Vercel 倾向于用字重区分层级。
+    *   正文：小（Regular, 13px-14px）。
+    *   辅助文本：极小（12px）。
+*   **字间距 (Tracking):** 稍微收紧 (`tracking-tight`)，让文本块看起来更结实。
 
-## 1. 核心设计哲学 (Core Philosophy)
-
-我们的设计不追求强烈的视觉冲击，而是追求**内心的平静与认知的流畅**。
-
-*   **Warm Minimalism (温暖极简)**: 摒弃科技产品常见的“冰冷蓝”与“纯白”，拥抱有温度的纸张感与陶土感。
-*   **Cognitive Ease (认知轻松)**: 减少不必要的边框、分割线和高饱和度色块。通过留白（White Space）和颜色层级来引导视线，而非线条。
-*   **Organic & Soft (有机柔和)**: 避免尖锐的直角。所有的容器、按钮、输入框都应拥有圆润的边缘，触感如鹅卵石般温润。
-*   **Immersive (沉浸感)**: 界面是内容的容器，容器本身应当是透明或像空气一样自然存在的。
-
----
-
-## 2. 色彩 DNA (Color DNA)
-
-这套名为 **"Zen (禅)"** 的色系，灵感源自晨曦中的石膏像与旧书页。
-
-### 🎨 基础色板 (The Palette)
-
-我们不使用绝对的黑 (#000000) 或绝对的白 (#FFFFFF)。
-
-*   **背景层 (Canvas)**
-    *   **Warm Beige (温米色 / Zen-50)**: `F6ECE3`
-    *   *用途*: 全局网页背景。仿佛一张未漂白的厚质书写纸，护眼且温暖。
-    
-*   **内容层 (Surface)**
-    *   **Pale Stone (浅石色 / Zen-100)**: `E8DAD2`
-    *   *用途*: 卡片背景、输入框背景。比背景稍深，形成微妙的层级。
-
-*   **文字与墨 (Ink)**
-    *   **Deep Charcoal (深紫灰 / Zen-900)**: `5A5560`
-    *   *用途*: 主标题、强调按钮背景。它是我们的“黑”，但带有紫色的色相，显得高级而深邃。
-    *   **Muted Ash (烟灰色 / Zen-600)**: `8A8692`
-    *   *用途*: 次要文字、说明性文本。阅读起来没有压力。
-
-*   **装饰与分割 (Accent)**
-    *   **Warm Silver (暖银色 / Zen-200)**: `D5CAC2`
-    *   *用途*: 极细微的描边、未激活的图标。
+#### 4. UI 组件特征 (Component Details)
+*   **卡片 (Cards):**
+    *   圆角：小圆角，通常是 `rounded-md` (6px) 或 `rounded-lg` (8px)。绝对不要用全圆角（Pill shape）。
+    *   交互：Hover 时边框颜色变亮（从 `#333` 变为 `#888` 或白色），或者背景极其轻微地变亮。
+*   **按钮 (Buttons):**
+    *   主按钮：白底黑字（高对比度）。
+    *   次级按钮：黑底、白字、细灰边框（Ghost/Outline style）。
+    *   高度：通常较矮，给人一种紧凑的工具感（height: 32px 或 40px）。
+*   **图标 (Icons):**
+    *   使用细线条图标（Stroke width 1.5px 或 1px）。
+    *   图标通常是灰色的，Hover 时变白。
 
 ---
 
-## 3. 视觉语言 (Visual Language)
+### 👩‍💻 给 React 开发者的具体复刻指令
 
-### 形状 (Shapes)
-*   **Super Rounded**: 卡片和容器使用大圆角（2xl / 24px），按钮使用胶囊形状（Full Rounded）。
-*   **Floating**: 元素不应该“贴”在背景上，而是轻轻“浮”在背景上。
+如果我是你的 Tech Lead，我会这样给你下达 Ticket：
 
-### 质感与光影 (Texture & Light)
-*   **No Borders**: 尽量少用边框。通过**背景色差**（Off-white on Beige）或**柔和投影**（Soft Shadow）来区分层级。
-*   **Matte Finish (哑光质感)**: 避免高光和强反射，追求如同磨砂纸或棉麻织物的质感。
+> “嘿，我们要复刻 Vercel 的 Dashboard。不要引入 Ant Design 或 Material UI，那些太重了。请使用 **React + Tailwind CSS**。
+>
+> **关键实现细节：**
+>
+> 1.  **全局样式：** 页面背景设为 `bg-black`，全局文字设为 `text-gray-100`，字体设为 `font-sans antialiased`。
+> 2.  **边框优先策略：** 任何卡片**不要用背景色区分**，要用边框。
+>     *   CSS: `border border-gray-800 bg-black hover:border-gray-500 transition-colors duration-200`。
+> 3.  **导航栏：** 固定在顶部，背景使用 `bg-black/50` 加上 `backdrop-blur-md` (毛玻璃效果)，底部加一条 `border-b border-gray-800`。
+> 4.  **徽章 (Badges):** 比如那个 `Hobby` 标签。
+>     *   样式：`text-xs px-2 py-0.5 rounded-full border border-gray-700 bg-gray-900 text-gray-400`。
+> 5.  **Git 信息：** 那个分支图标和 Commit ID。
+>     *   使用 Flexbox 对齐。
+>     *   图标大小 `w-4 h-4`。
+>     *   字体：`font-mono text-xs text-gray-500`。
+> 6.  **Avatar 堆叠：** 项目图标（如 Next.js Logo）通常是圆形的，背景白色，居中黑色图标。
+>
+> **记住：** 如果你觉得界面看起来‘太乱’，通常是因为灰色用得太多太杂。保持克制，主要只用三种灰（边框灰、正文灰、辅助灰）。让黑色保持纯净。”
 
-### 字体排印 (Typography)
-*   **Hierarchy over Size**: 不必一味放大字号，通过颜色的深浅（Zen-900 vs Zen-500）和字重（Bold vs Regular）来区分信息重要性。
-*   **Breathing Room**: 增加行高（Leading），让文字大口呼吸。
+### 🧩 视觉参考代码 (Tailwind CSS 示例)
 
----
+你可以直接给她这段代码片段作为“卡片”样式的基准：
 
-## 4. 场景应用规范 (Scenario Guide)
+```jsx
+// ProjectCard.jsx
+const ProjectCard = ({ name, domain, time, branch, commit }) => {
+  return (
+    <div className="group flex flex-col justify-between p-5 rounded-lg border border-[#333] bg-black hover:border-gray-400 transition-all duration-200 cursor-pointer">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-8">
+        <div className="flex items-center gap-3">
+          {/* Logo Placeholder */}
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-gray-700 to-gray-900 border border-gray-700 flex items-center justify-center">
+            <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[10px] border-b-white"></div>
+          </div>
+          <div>
+            <h3 className="font-bold text-sm text-gray-100">{name}</h3>
+            <p className="text-xs text-gray-500 mt-0.5">{domain}</p>
+          </div>
+        </div>
+      </div>
 
-### 🏠 成员列表 (The Gallery)
-*   **概念**: 艺术画廊的展签。
-*   **设计点**:
-    *   卡片背景使用**纯白**（在米色背景上显得干净）。
-    *   头像应当是圆形的，带有一圈淡雅的 Zen-200 描边。
-    *   鼠标悬停时，卡片应有“因重力减小而上浮”的物理动效。
-
-### 💬 LLM 对话 (The Quiet Space)
-*   **概念**: 思考的笔记本。
-*   **设计点**:
-    *   **AI 气泡**: 融入背景或使用极浅的 Zen-100，文字为深灰。代表“客观、支持”。
-    *   **用户气泡**: 使用 Zen-900（深色）填充，文字为浅米色。代表“主观、聚焦”。
-    *   **输入区**: 悬浮在底部的长条胶囊，像一个独立的工具栏，不与底部边缘粘连。
-
-### 🗺️ 地图探索 (The Explorer)
-*   **概念**: 探索者的羊皮卷。
-*   **设计点**:
-    *   **地图底图**: 必须去色/低饱和度处理。不能让地图原本花哨的蓝绿黄抢了 UI 的风头。
-    *   **标记点 (Marker)**: 摒弃传统的大头针。使用 Zen-900 深色实心圆点，配合半透明的光晕扩散。
-    *   **交互面板**: 使用“毛玻璃”效果（Blur），让地图信息在面板下方隐约可见，保持空间连续性。
-
----
-
-## 5. 设计自检清单 (Checklist)
-
-在完成任何一个页面前，请问自己：
-1.  **够暖吗？** 是否去掉了刺眼的纯白和纯黑？
-2.  **够软吗？** 是否还有尖锐的直角刺痛眼睛？
-3.  **够静吗？** 界面上的元素是否在争抢注意力？（应尽量做减法）
-4.  **呼吸感？** 元素之间是否太拥挤？（多给一点 Margin 和 Padding）
-
----
-*Created for Vibetj Project*
+      {/* Footer Info */}
+      <div className="text-xs text-gray-400 space-y-2">
+        <div className="flex items-center gap-2">
+           <span className="w-2 h-2 rounded-full bg-gray-600"></span>
+           <span>{time}</span>
+           <span className="text-gray-600">on</span>
+           <span className="font-mono text-gray-300 bg-gray-900 px-1 py-0.5 rounded border border-gray-800">
+             {branch}
+           </span>
+        </div>
+        <p className="truncate text-gray-500">{commit}</p>
+      </div>
+    </div>
+  );
+};
+```
