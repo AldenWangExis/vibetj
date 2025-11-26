@@ -17,15 +17,15 @@ import { MemberConfig } from "@/types";
 
 export const MEMBERS: MemberConfig[] = [
   {
-    github: "shadcn",
-    customBio: "Design System Engineer",
-  },
-  {
     github: "AldenWangExis",
-    customBio: "nana",
+    customBio: "https://aldenwangexis.github.io/",
   },
   {
     github: "rauchg",
     customBio: "CEO at Vercel",
+  },
+  {
+    github: "shadcn",
+    customBio: "Design System Engineer",
   },
 ];
