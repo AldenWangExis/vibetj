@@ -18,7 +18,6 @@
  * 规范: docs/01_tds.md, docs/01_urs.md
  */
 
-import Link from "next/link";
 import Image from "next/image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -31,7 +30,7 @@ interface MemberCardProps {
 
 export function MemberCard({ profile, priority = false }: MemberCardProps) {
   return (
-    <Link 
+    <a 
       href={profile.profileUrl} 
       target="_blank" 
       rel="noopener noreferrer"
@@ -79,7 +78,7 @@ export function MemberCard({ profile, priority = false }: MemberCardProps) {
           </p>
         </CardContent>
       </Card>
-    </Link>
+    </a>
   );
 }
 

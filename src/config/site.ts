@@ -13,9 +13,9 @@ export const siteConfig = {
   description: "VibeTJ Team Members - Industrial Minimalism Showcase",
   url: "https://vibetj.vercel.app",
   nav: [
-    { name: "Home", href: "/" },
-    { name: "Members", href: "/members" },
-    { name: "Lab", href: "/lab" },
+    { name: "Home", href: "/" as const },
+    { name: "Members", href: "/members" as const },
+    { name: "Lab", href: "/lab" as const },
   ],
-};
+} as const;
 
