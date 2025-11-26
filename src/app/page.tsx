@@ -1,12 +1,12 @@
 /**
  * app/page.tsx - 主页 (Home Page)
- * 
+ *
  * 核心功能:
  * - 展示 VibeTJ 的品牌介绍和核心理念
- * 
+ *
  * 架构设计:
  * - Server Component (静态内容)
- * 
+ *
  * 作者: ZHWA | 创建: 2024-11-26
  * 规范: docs/01_tds.md, docs/01_urs.md
  */
@@ -27,18 +27,19 @@ export default function HomePage() {
 
         {/* 核心理念 */}
         <div className="mx-auto max-w-[800px] space-y-4 rounded-lg border border-border bg-surface p-8">
-          <h2 className="text-2xl font-semibold text-text-primary">
-            核心理念
-          </h2>
+          <h2 className="text-2xl font-semibold text-text-primary">核心理念</h2>
           <div className="space-y-3 text-left text-text-secondary">
             <p>
-              <span className="font-semibold text-text-primary">GitOps 驱动:</span> 通过代码仓库管理成员列表，移除对传统数据库的依赖。
+              <span className="font-semibold text-text-primary">GitOps 驱动:</span>{" "}
+              通过代码仓库管理成员列表，移除对传统数据库的依赖。
             </p>
             <p>
-              <span className="font-semibold text-text-primary">工业极简主义:</span> 严格遵循 Vercel / Geist Design System 风格，追求精密的、数学化的设计。
+              <span className="font-semibold text-text-primary">工业极简主义:</span> 严格遵循 Vercel
+              / Geist Design System 风格，追求精密的、数学化的设计。
             </p>
             <p>
-              <span className="font-semibold text-text-primary">高性能优先:</span> 基于 Next.js 15 + React Server Components，实现极致的加载速度和 SEO 优化。
+              <span className="font-semibold text-text-primary">高性能优先:</span> 基于 Next.js 15 +
+              React Server Components，实现极致的加载速度和 SEO 优化。
             </p>
           </div>
         </div>

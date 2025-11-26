@@ -1,18 +1,18 @@
 /**
  * app/global-error.tsx - 全局根错误边界
- * 
+ *
  * 核心功能:
  * - 捕获 Root Layout 级别的错误
  * - 最后的错误兜底
- * 
+ *
  * 架构设计:
  * - Client Component
  * - 必须定义自己的 <html> 和 <body> 标签
- * 
+ *
  * 触发场景:
  * - Root Layout 错误
  * - error.tsx 无法捕获的错误
- * 
+ *
  * 作者: ZHWA | 创建: 2025-11-26
  * 规范: docs/01_tds.md
  */
@@ -55,11 +55,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Critical Error
-              </h2>
+              <h2 className="text-2xl font-semibold tracking-tight">Critical Error</h2>
               <p className="max-w-[500px] text-gray-400">
-                A critical error occurred. Please refresh the page or contact support if the problem persists.
+                A critical error occurred. Please refresh the page or contact support if the problem
+                persists.
               </p>
             </div>
 
@@ -71,7 +70,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                 Try Again
               </button>
               <button
-                onClick={() => window.location.href = "/"}
+                onClick={() => (window.location.href = "/")}
                 className="rounded-md border border-gray-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-gray-500"
               >
                 Go to Home
@@ -83,4 +82,3 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
     </html>
   );
 }
-

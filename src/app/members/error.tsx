@@ -1,19 +1,19 @@
 /**
  * app/members/error.tsx - 成员列表页错误边界
- * 
+ *
  * 核心功能:
  * - 捕获成员列表页的错误
  * - 处理 GitHub API 调用失败
- * 
+ *
  * 架构设计:
  * - Client Component
  * - 页面级错误边界
- * 
+ *
  * 触发场景:
  * - GitHub API 限流
  * - 网络错误
  * - 数据解析失败
- * 
+ *
  * 作者: ZHWA | 创建: 2025-11-26
  * 规范: docs/01_tds.md
  */
@@ -61,15 +61,14 @@ export default function MembersError({ error, reset }: ErrorProps) {
             Failed to Load Members
           </h2>
           <p className="max-w-[500px] text-text-secondary">
-            Unable to fetch member data. This might be due to GitHub API rate limiting or network issues.
+            Unable to fetch member data. This might be due to GitHub API rate limiting or network
+            issues.
           </p>
         </div>
 
         {/* 可能的原因 */}
         <div className="max-w-[600px] rounded-lg border border-border bg-surface p-6 text-left">
-          <h3 className="mb-3 text-sm font-semibold text-text-primary">
-            Possible Causes:
-          </h3>
+          <h3 className="mb-3 text-sm font-semibold text-text-primary">Possible Causes:</h3>
           <ul className="space-y-2 text-sm text-text-secondary">
             <li className="flex items-start gap-2">
               <span className="text-text-muted">•</span>
@@ -108,13 +107,10 @@ export default function MembersError({ error, reset }: ErrorProps) {
             <summary className="cursor-pointer text-sm font-semibold text-text-primary">
               Error Details (Dev Only)
             </summary>
-            <pre className="mt-2 overflow-auto text-xs text-text-secondary">
-              {error.message}
-            </pre>
+            <pre className="mt-2 overflow-auto text-xs text-text-secondary">{error.message}</pre>
           </details>
         )}
       </div>
     </div>
   );
 }
-

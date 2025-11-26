@@ -1,20 +1,20 @@
 /**
  * middleware.ts - 全局中间件 (Edge Runtime)
- * 
+ *
  * 核心功能:
  * - 路由守卫
  * - 请求日志
  * - 性能监控
- * 
+ *
  * 架构设计:
  * - Edge Runtime (轻量化)
  * - 在请求到达页面前执行
- * 
+ *
  * 使用场景:
  * - 路由重定向
  * - 请求拦截
  * - A/B 测试
- * 
+ *
  * 作者: ZHWA | 创建: 2025-11-26
  * 规范: docs/01_tds.md
  */
@@ -42,7 +42,7 @@ export function middleware(request: NextRequest) {
 
   // 添加自定义响应头
   const response = NextResponse.next();
-  
+
   // 安全头
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("X-Content-Type-Options", "nosniff");
@@ -64,4 +64,3 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 };
-

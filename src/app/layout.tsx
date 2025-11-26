@@ -1,15 +1,15 @@
 /**
  * app/layout.tsx - Root Layout
- * 
+ *
  * 核心功能:
  * - 全局字体配置 (Geist Sans + Geist Mono)
  * - SEO Metadata 配置
  * - 全局导航栏集成
- * 
+ *
  * 架构设计:
  * - Server Component
  * - 使用 Geist 字体实现零 CLS 加载
- * 
+ *
  * 作者: ZHWA | 创建: 2024-11-26
  * 规范: docs/01_tds.md
  */

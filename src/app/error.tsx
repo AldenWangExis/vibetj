@@ -1,19 +1,19 @@
 /**
  * app/error.tsx - 全局错误边界
- * 
+ *
  * 核心功能:
  * - 捕获运行时错误
  * - 提供错误恢复机制
- * 
+ *
  * 架构设计:
  * - Client Component (需要使用 useEffect)
  * - 自动包裹所有子路由
- * 
+ *
  * 触发场景:
  * - 组件渲染错误
  * - 数据获取失败
  * - 未捕获的异常
- * 
+ *
  * 作者: ZHWA | 创建: 2025-11-26
  * 规范: docs/01_tds.md
  */
@@ -65,20 +65,16 @@ export default function Error({ error, reset }: ErrorProps) {
           <p className="max-w-[500px] text-text-secondary">
             An unexpected error occurred. Please try again or return to the home page.
           </p>
-          
+
           {/* 开发环境显示错误详情 */}
           {process.env.NODE_ENV === "development" && (
             <details className="mt-4 max-w-[600px] rounded-lg border border-border bg-surface p-4 text-left">
               <summary className="cursor-pointer text-sm font-semibold text-text-primary">
                 Error Details (Dev Only)
               </summary>
-              <pre className="mt-2 overflow-auto text-xs text-text-secondary">
-                {error.message}
-              </pre>
+              <pre className="mt-2 overflow-auto text-xs text-text-secondary">{error.message}</pre>
               {error.digest && (
-                <p className="mt-2 text-xs text-text-muted">
-                  Error ID: {error.digest}
-                </p>
+                <p className="mt-2 text-xs text-text-muted">Error ID: {error.digest}</p>
               )}
             </details>
           )}
@@ -103,4 +99,3 @@ export default function Error({ error, reset }: ErrorProps) {
     </div>
   );
 }
-

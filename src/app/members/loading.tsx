@@ -1,12 +1,12 @@
 /**
  * app/members/loading.tsx - 成员列表页加载状态
- * 
+ *
  * 核心功能:
  * - 提供骨架屏，优化 TTFB
- * 
+ *
  * 架构设计:
  * - 自动被 Next.js 使用作为 Suspense fallback
- * 
+ *
  * 作者: ZHWA | 创建: 2024-11-26
  * 规范: docs/01_tds.md
  */
@@ -32,4 +32,3 @@ export default function MembersLoading() {
     </div>
   );
 }
-

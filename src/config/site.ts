@@ -1,9 +1,9 @@
 /**
  * config/site.ts - 站点元数据配置
- * 
+ *
  * 核心导出:
  * - siteConfig: 站点全局配置对象
- * 
+ *
  * 作者: ZHWA | 创建: 2024-11-26
  * 规范: docs/01_tds.md
  */
@@ -18,4 +18,3 @@ export const siteConfig = {
     { name: "Lab", href: "/lab" as const },
   ],
 } as const;
-

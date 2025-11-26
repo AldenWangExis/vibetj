@@ -1,18 +1,18 @@
 /**
  * app/not-found.tsx - 404 错误页面
- * 
+ *
  * 核心功能:
  * - 处理 404 Not Found 错误
  * - 提供友好的错误提示和导航
- * 
+ *
  * 架构设计:
  * - Server Component (静态内容)
  * - 遵循 Vercel 工业极简主义风格
- * 
+ *
  * 触发场景:
  * - 访问不存在的路由
  * - 调用 notFound() 函数
- * 
+ *
  * 作者: ZHWA | 创建: 2025-11-26
  * 规范: docs/01_tds.md, docs/01_urs.md
  */
@@ -82,4 +82,3 @@ export default function NotFound() {
     </div>
   );
 }
-
