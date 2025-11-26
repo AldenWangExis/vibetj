@@ -14,6 +14,7 @@
  */
 
 import { MemberCard } from "./MemberCard";
+import { JoinCard } from "./JoinCard";
 import type { MemberProfile } from "@/types";
 
 interface MemberGridProps {
@@ -21,23 +22,24 @@ interface MemberGridProps {
 }
 
 export function MemberGrid({ profiles }: MemberGridProps) {
-  if (profiles.length === 0) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <p className="text-text-secondary">No members found</p>
-      </div>
-    );
-  }
-
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {profiles.map((profile, index) => (
-        <MemberCard
-          key={profile.github}
-          profile={profile}
-          priority={index < 3} // 首屏前 3 个卡片优化 LCP
-        />
-      ))}
+      {profiles.length > 0 ? (
+        profiles.map((profile, index) => (
+          <MemberCard
+            key={profile.github}
+            profile={profile}
+            priority={index < 3} // 首屏前 3 个卡片优化 LCP
+          />
+        ))
+      ) : (
+        <div className="col-span-full flex items-center justify-center py-12">
+          <p className="text-text-secondary">No members found. Be the first!</p>
+        </div>
+      )}
+
+      {/* 总是显示引导添加卡片 */}
+      <JoinCard />
     </div>
   );
 }

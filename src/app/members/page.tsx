@@ -20,6 +20,7 @@
  */
 
 import { Suspense } from "react";
+import { Github } from "lucide-react";
 import { MEMBERS } from "@/config/members";
 import { getAllMemberProfiles } from "@/services/memberService";
 import { MemberGrid } from "@/components/features/members/MemberGrid";
@@ -37,10 +38,22 @@ async function MembersContent() {
 export default function MembersPage() {
   return (
     <div className="container mx-auto max-w-screen-2xl px-4 py-8">
-      {/* 页面标题 */}
-      <div className="mb-8 space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight text-text-primary">Team Members</h1>
-        <p className="text-text-secondary">Meet the people behind VibeTJ</p>
+      {/* 页面标题与操作区 */}
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight text-text-primary">Team Members</h1>
+          <p className="text-text-secondary">Meet the people behind VibeTJ</p>
+        </div>
+
+        <a
+          href="https://github.com/AldenWangExis/vibetj#how-to-join-vibetj"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex h-9 items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-text-primary shadow-sm transition-colors hover:bg-surface hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+        >
+          <Github className="mr-2 h-4 w-4" />
+          Join via GitHub
+        </a>
       </div>
 
       {/* 成员列表 - 使用 Suspense 实现流式渲染 */}
