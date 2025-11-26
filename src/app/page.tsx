@@ -1,95 +1,66 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+/**
+ * app/page.tsx - 主页 (Home Page)
+ * 
+ * 核心功能:
+ * - 展示 VibeTJ 的品牌介绍和核心理念
+ * 
+ * 架构设计:
+ * - Server Component (静态内容)
+ * 
+ * 作者: ZHWA | 创建: 2024-11-26
+ * 规范: docs/01_tds.md, docs/01_urs.md
+ */
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="container mx-auto max-w-screen-2xl px-4 py-12">
+      <div className="flex flex-col items-center justify-center space-y-8 text-center">
+        {/* 品牌标题 */}
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold tracking-tight text-text-primary sm:text-5xl md:text-6xl">
+            VibeTJ
+          </h1>
+          <p className="mx-auto max-w-[700px] text-lg text-text-secondary">
+            Industrial Minimalism Showcase
+          </p>
+        </div>
 
-        <div className={styles.ctas}>
+        {/* 核心理念 */}
+        <div className="mx-auto max-w-[800px] space-y-4 rounded-lg border border-border bg-surface p-8">
+          <h2 className="text-2xl font-semibold text-text-primary">
+            核心理念
+          </h2>
+          <div className="space-y-3 text-left text-text-secondary">
+            <p>
+              <span className="font-semibold text-text-primary">GitOps 驱动:</span> 通过代码仓库管理成员列表，移除对传统数据库的依赖。
+            </p>
+            <p>
+              <span className="font-semibold text-text-primary">工业极简主义:</span> 严格遵循 Vercel / Geist Design System 风格，追求精密的、数学化的设计。
+            </p>
+            <p>
+              <span className="font-semibold text-text-primary">高性能优先:</span> 基于 Next.js 15 + React Server Components，实现极致的加载速度和 SEO 优化。
+            </p>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="flex gap-4">
           <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/members"
+            className="rounded-md bg-text-primary px-6 py-3 text-sm font-semibold text-background transition-colors hover:bg-text-primary/90"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            查看成员
           </a>
           <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://github.com/AldenWangExis/vibetj"
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.secondary}
+            className="rounded-md border border-border px-6 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-border-hover"
           >
-            Read our docs
+            GitHub 仓库
           </a>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
