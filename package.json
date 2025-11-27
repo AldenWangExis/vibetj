@@ -15,11 +15,13 @@
     "validate": "npm run type-check && npm run lint && npm run format:check"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@neondatabase/serverless": "^1.0.2",
     "@octokit/rest": "^22.0.1",
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.7",
     "geist": "^1.5.1",
     "lucide-react": "^0.555.0",
@@ -31,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/amap-js-api": "^1.4.16",
     "@types/node": "^20.19.25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
