@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface TypewriterTextProps {
@@ -19,29 +19,38 @@ export function TypewriterText({
   maxDelay = 100,
 }: TypewriterTextProps) {
   const [displayedText, setDisplayedText] = useState("");
-  // const [isComplete, setIsComplete] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const currentIndexRef = useRef(0);
 
   useEffect(() => {
-    let currentIndex = 0;
-    let timeoutId: NodeJS.Timeout;
+    // Reset state when text changes
+    setDisplayedText("");
+    currentIndexRef.current = 0;
 
     const typeNextChar = () => {
-      if (currentIndex >= text.length) {
-        // setIsComplete(true);
+      if (currentIndexRef.current >= text.length) {
         return;
       }
 
-      setDisplayedText((prev) => prev + text[currentIndex]);
-      currentIndex++;
+      const char = text[currentIndexRef.current];
+      // Safety check to prevent "undefined" from being appended
+      if (char !== undefined) {
+        setDisplayedText((prev) => prev + char);
+        currentIndexRef.current++;
+      }
 
       const randomDelay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
-      timeoutId = setTimeout(typeNextChar, randomDelay);
+      timeoutRef.current = setTimeout(typeNextChar, randomDelay);
     };
 
     // Initial start delay
-    timeoutId = setTimeout(typeNextChar, 500);
+    timeoutRef.current = setTimeout(typeNextChar, 500);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [text, minDelay, maxDelay]);
 
   return (

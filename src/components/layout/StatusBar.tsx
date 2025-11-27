@@ -5,23 +5,32 @@ export function StatusBar() {
     <footer
       className={cn(
         "fixed bottom-0 left-0 right-0 z-50 flex h-8 w-full items-center justify-between",
-        "border-t border-border bg-background px-4 font-mono text-[10px] uppercase tracking-wider text-text-muted select-none"
+        "border-t border-border bg-background px-4 font-mono text-xs uppercase tracking-wider text-text-muted select-none"
       )}
     >
-      {/* Left: Build Info */}
-      <div className="flex items-center gap-4">
-        <span className="flex items-center gap-1.5 hover:text-text-primary transition-colors cursor-default">
-          <span className="text-text-secondary">git:</span>
+      {/* Left: Build Info (Clickable) */}
+      <a
+        href="https://github.com/AldenWangExis/vibetj"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-4 hover:text-text-primary transition-colors group"
+      >
+        <span className="flex items-center gap-1.5">
+          <span className="text-text-secondary group-hover:text-accent-green transition-colors">
+            git:
+          </span>
           <span>main</span>
         </span>
-        <span className="flex items-center gap-1.5 hover:text-text-primary transition-colors cursor-default">
-          <span className="text-text-secondary">commit:</span>
+        <span className="flex items-center gap-1.5">
+          <span className="text-text-secondary group-hover:text-accent-green transition-colors">
+            commit:
+          </span>
           <span>8a2f9c</span>
         </span>
-        <span className="hidden sm:flex items-center gap-1.5 hover:text-text-primary transition-colors cursor-default">
+        <span className="hidden sm:flex items-center gap-1.5">
           <span>v1.0.0</span>
         </span>
-      </div>
+      </a>
 
       {/* Right: System Status */}
       <div className="flex items-center gap-4">

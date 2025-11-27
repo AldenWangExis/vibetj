@@ -13,7 +13,7 @@
  * 规范: docs/03_tds.md
  */
 
-import { Github, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { TypewriterText } from "@/components/ui/TypewriterText";
 import { getAllMemberProfiles } from "@/services/memberService";
 import { MEMBERS } from "@/config/members";
@@ -44,45 +44,42 @@ export default async function HomePage() {
       <main className="container relative z-10 mx-auto max-w-screen-xl px-4 py-20 sm:py-32">
         <div className="flex flex-col items-center space-y-12 text-center">
           {/* Hero Section */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* 胶囊标签 - 可选，增加层级感 */}
-            <div className="inline-flex items-center rounded-full border border-border-subtle bg-surface/50 px-3 py-1 text-xs font-medium text-text-secondary backdrop-blur-sm transition-colors hover:border-text-secondary/50">
+            {/* <div className="inline-flex items-center rounded-full border border-border-subtle bg-surface/50 px-3 py-1 text-xs font-medium text-text-secondary backdrop-blur-sm transition-colors hover:border-text-secondary/50 hover:bg-surface/80 group cursor-default">
               <span className="mr-2 flex h-2 w-2">
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-blue"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-blue group-hover:shadow-[0_0_8px_rgba(0,112,243,0.6)] transition-shadow"></span>
               </span>
-              v1.0.0 System Online
-            </div>
+              <span className="font-mono tracking-wide">v1.0.0 System Online</span>
+            </div> */}
 
-            <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 sm:text-6xl md:text-7xl lg:text-8xl">
-              VibeTJ
-            </h1>
+            {/* 张扬的标题设计 */}
+            <div className="relative">
+              <h1 className="text-6xl font-bold tracking-tighter text-white sm:text-7xl md:text-8xl lg:text-9xl drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                VibeTJ
+              </h1>
+              {/* 装饰性光晕 */}
+              <div className="absolute -inset-1 bg-white/10 blur-[40px] -z-10 opacity-50 rounded-full pointer-events-none"></div>
+            </div>
 
             <div className="mx-auto h-8">
               <TypewriterText
                 text="Connect · Build · Vibe"
-                className="text-lg text-text-secondary md:text-xl font-mono"
+                className="text-lg text-text-code md:text-xl font-mono tracking-tight"
+                cursorClassName="bg-accent-green shadow-[0_0_8px_#00FF94]"
               />
             </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          {/* CTA Buttons - 移除 GitHub 按钮，只保留 Join */}
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
             <Link
               href="/members"
-              className="group flex items-center justify-center gap-2 h-10 rounded-md bg-white px-8 text-sm font-medium text-black transition-all hover:bg-gray-200"
+              className="group flex items-center justify-center gap-2 h-12 rounded-lg bg-white px-10 text-sm font-bold text-black transition-all hover:bg-white/90 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
             >
               <Users className="h-4 w-4" />
               <span>Join Community</span>
             </Link>
-            <a
-              href="https://github.com/AldenWangExis/vibetj"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-center gap-2 h-10 rounded-md border border-border bg-black px-8 text-sm font-medium text-text-secondary transition-all hover:text-white hover:border-gray-500"
-            >
-              <Github className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-              <span>GitHub</span>
-            </a>
           </div>
 
           {/* Bento Grid Layout - Viewports */}
