@@ -24,8 +24,19 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import AMapLoader from "@amap/amap-jsapi-loader";
 import type { AMapInstance } from "@/types/map";
+
+type AMapLoaderAPI = typeof import("@amap/amap-jsapi-loader");
+let amapLoaderPromise: Promise<AMapLoaderAPI> | null = null;
+
+async function loadAMapLoader(): Promise<AMapLoaderAPI> {
+  if (!amapLoaderPromise) {
+    amapLoaderPromise = import("@amap/amap-jsapi-loader").then((module) =>
+      module.default ? module.default : module
+    );
+  }
+  return amapLoaderPromise;
+}
 
 interface UseAMapOptions {
   center?: [number, number]; // 初始中心点 [lng, lat]
@@ -52,15 +63,15 @@ export function useAMap(containerId: string, options: UseAMapOptions = {}): UseA
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const mapRef = useRef<AMapInstance | null>(null);
-  const isInitializedRef = useRef(false); // 防止 Strict Mode 双重初始化
 
   useEffect(() => {
-    // 防止重复初始化
-    if (isInitializedRef.current) return;
-
-    let mapInstance: AMapInstance | null = null;
+    let isUnmounted = false;
 
     async function initMap() {
+      if (typeof window === "undefined") {
+        return;
+      }
+
       try {
         // 1. 注入安全密钥 (必须在 load 之前)
         if (!window._AMapSecurityConfig) {
@@ -71,6 +82,7 @@ export function useAMap(containerId: string, options: UseAMapOptions = {}): UseA
         }
 
         // 2. 加载高德地图 API
+        const AMapLoader = await loadAMapLoader();
         const AMap = await AMapLoader.load({
           key: process.env.NEXT_PUBLIC_AMAP_KEY || "",
           version: "2.0",
@@ -80,16 +92,21 @@ export function useAMap(containerId: string, options: UseAMapOptions = {}): UseA
         console.log("[AMap] API loaded successfully");
 
         // 3. 初始化地图实例
-        mapInstance = new AMap.Map(containerId, {
-          center: options.center || [116.397428, 39.90923], // 默认北京
-          zoom: options.zoom || 11,
+        const mapInstance = new AMap.Map(containerId, {
+          center: options.center || [117.200983, 39.084158], // 默认天津市和平区
+          zoom: options.zoom || 13,
           viewMode: options.viewMode || "3D",
           mapStyle: options.mapStyle || "amap://styles/dark", // 默认暗色主题
           showLabel: true,
         });
 
+        if (isUnmounted) {
+          mapInstance.destroy();
+          return;
+        }
+
+        window.AMap = window.AMap || AMap;
         mapRef.current = mapInstance;
-        isInitializedRef.current = true;
         setIsLoaded(true);
 
         console.log("[AMap] Map instance created");
@@ -104,13 +121,24 @@ export function useAMap(containerId: string, options: UseAMapOptions = {}): UseA
 
     // 清理函数: 销毁地图实例
     return () => {
-      if (mapInstance) {
+      isUnmounted = true;
+      if (mapRef.current) {
         console.log("[AMap] Destroying map instance");
-        mapInstance.destroy();
+        mapRef.current.destroy();
         mapRef.current = null;
       }
     };
-  }, [containerId, options.center, options.zoom, options.mapStyle, options.viewMode]);
+  }, [containerId]);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    if (options.center) {
+      mapRef.current.setCenter(options.center);
+    }
+    if (options.zoom) {
+      mapRef.current.setZoom(options.zoom);
+    }
+  }, [options.center, options.zoom]);
 
   return {
     map: mapRef.current,

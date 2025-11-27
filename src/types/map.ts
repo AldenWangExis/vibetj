@@ -93,6 +93,7 @@ export interface AMapInstance {
   add: (markers: AMapMarker | AMapMarker[]) => void;
   remove: (markers: AMapMarker | AMapMarker[]) => void;
   setCenter: (position: [number, number]) => void;
+  setZoom: (zoom: number) => void;
   setZoomAndCenter: (zoom: number, position: [number, number]) => void;
   setMapStyle: (style: string) => void;
   destroy: () => void;

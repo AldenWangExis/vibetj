@@ -35,7 +35,8 @@ export function MapSearch({ onSelect }: MapSearchProps) {
       if (!AMap.PlaceSearch) return;
 
       const placeSearch = new AMap.PlaceSearch({
-        city: "全国",
+        city: "天津", // 默认搜索天津
+        citylimit: false, // 支持跨城市搜索
       });
 
       placeSearch.search(keyword, (status: string, result: unknown) => {

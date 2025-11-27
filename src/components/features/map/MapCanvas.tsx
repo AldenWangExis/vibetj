@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { useAMap } from "@/hooks/use-amap";
 import type { MapMarker, MapCoordinate, AMapMarker, AMapClickEvent } from "@/types/map";
 
+const TIANJIN_CENTER: [number, number] = [117.200983, 39.084158];
+
 interface MapCanvasProps {
   markers: MapMarker[];
   selectedMarkerId: number | null;
@@ -21,8 +23,9 @@ export function MapCanvas({
 }: MapCanvasProps) {
   const containerId = "map-container";
   const { map, isLoaded } = useAMap(containerId, {
+    center: TIANJIN_CENTER,
+    zoom: 13,
     viewMode: "3D",
-    zoom: 11,
   });
 
   // 存储 marker 实例以便清理
@@ -31,7 +34,15 @@ export function MapCanvas({
 
   // 渲染标记点
   useEffect(() => {
-    if (!map || !isLoaded || typeof window === "undefined" || !window.AMap) return;
+    if (
+      !map ||
+      !isLoaded ||
+      typeof map.add !== "function" ||
+      typeof window === "undefined" ||
+      !window.AMap
+    ) {
+      return;
+    }
 
     const AMap = window.AMap;
 
