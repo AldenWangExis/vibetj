@@ -12,7 +12,7 @@
  * - GitHub API 数据属于公共数据 (CMS/Public Data)
  * - 当前使用 @octokit/rest，缓存由 Route-level ISR (revalidate = 3600) 控制
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: Alden | 创建: 2025-11-26
  * 规范: docs/01_tds.md
  */
 

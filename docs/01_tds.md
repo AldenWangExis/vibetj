@@ -1,7 +1,7 @@
 # VibeTJ - 技术设计说明书 (TDS)
 
 **版本号:** v1.0
-**日期:** 2024-11-26
+**日期:** 2025-11-26
 **适用对象:** 开发工程师、DevOps
 **技术栈:** Next.js 15, React 19, TypeScript 5, Tailwind CSS 3.4, Shadcn/ui
 

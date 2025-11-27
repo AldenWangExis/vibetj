@@ -7,7 +7,7 @@
  * 架构设计:
  * - 自动被 Next.js 使用作为 Suspense fallback
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: Alden | 创建: 2025-11-26
  * 规范: docs/01_tds.md
  */
 
