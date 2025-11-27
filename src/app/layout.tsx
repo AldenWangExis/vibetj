@@ -5,22 +5,22 @@
  * - 全局字体配置 (Geist Sans + Geist Mono)
  * - SEO Metadata 配置
  * - 全局导航栏集成
- * - 全局页脚集成
- * - 全局背景样式 (Vercel Grid)
+ * - 全局状态栏集成 (StatusBar)
+ * - 全局背景样式 (Grid + Noise + Breathing)
  *
  * 架构设计:
  * - Server Component
  * - 使用 Geist 字体实现零 CLS 加载
  *
  * 作者: Alden | 创建: 2025-11-26 | 修改: 2025-11-27
- * 规范: docs/01_tds.md
+ * 规范: docs/03_tds.md
  */
 
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { StatusBar } from "@/components/layout/StatusBar";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -60,15 +60,16 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="font-sans antialiased bg-background text-text-primary min-h-screen relative selection:bg-white/20 flex flex-col">
-        {/* Global Background Grid */}
-        <div className="fixed inset-0 z-[-1] pointer-events-none">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        </div>
+      <body className="font-sans antialiased bg-background text-text-primary min-h-screen relative selection:bg-accent-green/20 selection:text-accent-green flex flex-col overflow-x-hidden">
+        {/* 1. Film Grain (Noise) Overlay - Global */}
+        <div className="fixed inset-0 z-50 pointer-events-none opacity-[0.03] bg-noise-pattern mix-blend-overlay"></div>
+
+        {/* 2. Breathing Grid Background */}
+        <div className="fixed inset-0 z-[-1] pointer-events-none bg-grid-pattern opacity-[0.15] animate-grid-breath [mask-image:linear-gradient(to_bottom,transparent,black,transparent)]"></div>
 
         <Navbar />
-        <main className="relative z-10 flex-1">{children}</main>
-        <Footer />
+        <main className="relative z-10 flex-1 pb-8">{children}</main>
+        <StatusBar />
       </body>
     </html>
   );
