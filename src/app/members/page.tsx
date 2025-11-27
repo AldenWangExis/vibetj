@@ -15,7 +15,7 @@
  * 2. 调用 Service 层获取完整档案
  * 3. 传递给 MemberGrid 渲染
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: ZHWA | 创建: 2024-11-26 | 修改: 2025-11-27
  * 规范: docs/01_tds.md, docs/01_urs.md
  */
 
@@ -37,21 +37,26 @@ async function MembersContent() {
 
 export default function MembersPage() {
   return (
-    <div className="container mx-auto max-w-screen-2xl px-4 py-8">
+    <div className="container mx-auto max-w-screen-xl px-4 py-12 sm:py-20">
       {/* 页面标题与操作区 */}
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-text-primary">Team Members</h1>
-          <p className="text-text-secondary">Meet the people behind VibeTJ</p>
+      <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 sm:text-5xl">
+            Team Members
+          </h1>
+          <p className="text-lg text-text-secondary max-w-[500px] font-light">
+            Meet the people behind VibeTJ. We are a distributed team of developers, designers, and
+            creators.
+          </p>
         </div>
 
         <a
           href="https://github.com/AldenWangExis/vibetj#how-to-join-vibetj"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-9 items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-text-primary shadow-sm transition-colors hover:bg-surface hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+          className="group inline-flex h-10 items-center justify-center rounded-md border border-border bg-black px-6 text-sm font-medium text-text-secondary transition-all hover:text-white hover:border-gray-500 hover:bg-surface"
         >
-          <Github className="mr-2 h-4 w-4" />
+          <Github className="mr-2 h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
           Join via GitHub
         </a>
       </div>
@@ -71,7 +76,7 @@ function MembersLoadingSkeleton() {
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          className="h-[180px] animate-pulse rounded-lg border border-border bg-surface"
+          className="h-[180px] animate-pulse rounded-lg border border-border bg-surface/50"
         />
       ))}
     </div>

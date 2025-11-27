@@ -10,7 +10,7 @@
  * - 居中布局，强调行动点
  * - 极简风格 (Vercel Style)
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: ZHWA | 创建: 2024-11-26 | 修改: 2025-11-27
  */
 
 import { Plus, ArrowRight } from "lucide-react";
@@ -24,19 +24,23 @@ export function JoinCard() {
       rel="noopener noreferrer"
       className="group block h-full"
     >
-      <Card className="flex h-full min-h-[180px] flex-col items-center justify-center border-dashed border-border bg-transparent transition-all duration-200 hover:border-border-hover hover:bg-surface/50">
+      <Card className="flex h-full min-h-[180px] flex-col items-center justify-center border-dashed border-border bg-surface/30 backdrop-blur-sm transition-all duration-300 hover:border-border-hover hover:bg-surface/80 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]">
         <CardContent className="flex flex-col items-center gap-4 p-6 text-center">
           {/* Icon Wrapper */}
-          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-background transition-colors group-hover:border-border-hover group-hover:text-text-primary">
-            <Plus className="h-6 w-6 text-text-secondary transition-colors group-hover:text-text-primary" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-black/50 transition-all group-hover:scale-110 group-hover:border-white/20 group-hover:bg-black">
+            <Plus className="h-5 w-5 text-text-secondary transition-colors group-hover:text-white" />
           </div>
 
           <div className="space-y-1">
-            <h3 className="font-semibold text-text-primary">Join the Team</h3>
-            <p className="text-sm text-text-secondary">Submit a Pull Request to add yourself</p>
+            <h3 className="font-semibold text-text-primary group-hover:text-white transition-colors">
+              Join the Team
+            </h3>
+            <p className="text-sm text-text-secondary group-hover:text-text-secondary/80 transition-colors">
+              Submit a Pull Request to add yourself
+            </p>
           </div>
 
-          <div className="flex items-center text-xs font-medium text-text-secondary opacity-0 transition-all group-hover:opacity-100">
+          <div className="flex items-center text-xs font-medium text-text-secondary opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:text-white">
             View Instructions <ArrowRight className="ml-1 h-3 w-3" />
           </div>
         </CardContent>

@@ -4,7 +4,7 @@
  * 核心导出:
  * - siteConfig: 站点全局配置对象
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: ZHWA | 创建: 2024-11-26 | 修改: 2025-11-27
  * 规范: docs/01_tds.md
  */
 
@@ -17,4 +17,8 @@ export const siteConfig = {
     { name: "Members", href: "/members" as const },
     { name: "Lab", href: "/lab" as const },
   ],
+  links: {
+    github: "https://github.com/AldenWangExis/vibetj",
+    personal: "https://aldenwangexis.github.io/",
+  },
 } as const;

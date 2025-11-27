@@ -14,7 +14,7 @@
  * - 圆角: rounded-xl (8px)
  * - 交互: Hover 时边框变亮、轻微阴影
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: ZHWA | 创建: 2024-11-26 | 修改: 2025-11-27
  * 规范: docs/01_tds.md, docs/01_urs.md
  */
 
@@ -31,36 +31,40 @@ interface MemberCardProps {
 export function MemberCard({ profile, priority = false }: MemberCardProps) {
   return (
     <a href={profile.profileUrl} target="_blank" rel="noopener noreferrer" className="group block">
-      <Card className="h-full transition-all duration-200 hover:border-border-hover hover:shadow-md">
+      <Card className="h-full bg-surface/50 backdrop-blur-sm border-border transition-all duration-300 hover:border-border-hover hover:bg-surface hover:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-4">
             {/* 头像 */}
-            <Avatar className="h-16 w-16">
+            <Avatar className="h-14 w-14 border border-border">
               <AvatarImage src={profile.avatarUrl} alt={profile.displayName} asChild>
                 <Image
                   src={profile.avatarUrl}
                   alt={profile.displayName}
-                  width={64}
-                  height={64}
+                  width={56}
+                  height={56}
                   priority={priority}
                 />
               </AvatarImage>
-              <AvatarFallback>{profile.displayName.slice(0, 2).toUpperCase()}</AvatarFallback>
+              <AvatarFallback className="bg-background text-text-secondary">
+                {profile.displayName.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
             </Avatar>
 
             {/* 昵称与 Handle */}
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-base text-text-primary tracking-tight truncate">
+              <h3 className="font-semibold text-base text-text-primary tracking-tight truncate group-hover:text-white transition-colors">
                 {profile.displayName}
               </h3>
-              <p className="text-sm text-text-secondary font-mono">@{profile.github}</p>
+              <p className="text-xs text-text-secondary font-mono group-hover:text-text-muted transition-colors">
+                @{profile.github}
+              </p>
             </div>
           </div>
         </CardHeader>
 
         <CardContent>
           {/* 自定义签名 */}
-          <p className="text-sm text-text-secondary line-clamp-2">
+          <p className="text-sm text-text-secondary line-clamp-2 leading-relaxed group-hover:text-text-secondary/80 transition-colors">
             {profile.bio || "No bio available"}
           </p>
         </CardContent>
