@@ -11,6 +11,8 @@ interface MapCanvasProps {
   selectedMarkerId: number | null;
   onMarkerSelect: (id: number) => void;
   tempMarker: MapCoordinate | null;
+  shouldFocusTemp: boolean;
+  onTempFocusHandled: () => void;
   onMapClick: (coord: MapCoordinate) => void;
 }
 
@@ -19,6 +21,8 @@ export function MapCanvas({
   selectedMarkerId,
   onMarkerSelect,
   tempMarker,
+  shouldFocusTemp,
+  onTempFocusHandled,
   onMapClick,
 }: MapCanvasProps) {
   const containerId = "map-container";
@@ -118,9 +122,15 @@ export function MapCanvas({
 
       map.add(marker);
       tempMarkerRef.current = marker;
-      map.setCenter([tempMarker.lng, tempMarker.lat]);
+
+      if (shouldFocusTemp) {
+        map.setZoomAndCenter(16, [tempMarker.lng, tempMarker.lat]);
+        onTempFocusHandled();
+      } else {
+        map.setCenter([tempMarker.lng, tempMarker.lat]);
+      }
     }
-  }, [map, isLoaded, tempMarker]);
+  }, [map, isLoaded, tempMarker, shouldFocusTemp, onTempFocusHandled]);
 
   // 绑定地图点击事件
   useEffect(() => {

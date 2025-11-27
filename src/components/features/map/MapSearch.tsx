@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import type { KeyboardEvent } from "react";
 import type { SearchResult, MapCoordinate } from "@/types/map";
 
 interface MapSearchProps {
@@ -11,24 +12,28 @@ export function MapSearch({ onSelect }: MapSearchProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [emptyMessage, setEmptyMessage] = useState<string | null>(null);
 
   // 简单的防抖逻辑
   useEffect(() => {
     const timer = setTimeout(() => {
       if (query.trim().length > 1) {
-        handleSearch(query);
+        handleSearch(query, "debounce");
       } else {
         setResults([]);
+        setEmptyMessage(null);
       }
     }, 500);
 
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
-  const handleSearch = (keyword: string) => {
+  const handleSearch = (keyword: string, mode: "enter" | "debounce") => {
     if (typeof window === "undefined" || !window.AMap) return;
 
     setIsSearching(true);
+    setEmptyMessage(null);
     const AMap = window.AMap;
 
     AMap.plugin(["AMap.PlaceSearch"], () => {
@@ -41,43 +46,68 @@ export function MapSearch({ onSelect }: MapSearchProps) {
 
       placeSearch.search(keyword, (status: string, result: unknown) => {
         setIsSearching(false);
-        if (status === "complete" && typeof result === "object" && result !== null) {
-          const typedResult = result as {
-            info?: string;
-            poiList?: {
-              pois?: Array<{
-                id: string;
-                name: string;
-                address: string;
-                location: { lat: number; lng: number };
-                adcode: string;
-                cityname: string;
-              }>;
-            };
-          };
+        const pois = extractPois(result);
 
-          if (typedResult.info === "OK" && typedResult.poiList?.pois) {
-            const pois = typedResult.poiList.pois.map((poi) => ({
-              id: poi.id,
-              name: poi.name,
-              address: poi.address,
-              location: {
-                lat: poi.location.lat,
-                lng: poi.location.lng,
-              },
-              adcode: poi.adcode,
-              cityname: poi.cityname,
-            }));
-            setResults(pois);
-          } else {
-            setResults([]);
+        if (status === "complete" && pois.length > 0) {
+          if (mode === "enter") {
+            const first = pois[0];
+            onSelect(first.location);
+            setQuery(first.name);
           }
+          setEmptyMessage(null);
+          setResults(pois);
         } else {
+          setEmptyMessage("未找到匹配地点，请尝试其它关键词。");
           setResults([]);
         }
       });
     });
   };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const value = query.trim();
+      if (value.length > 1) {
+        handleSearch(value, "enter");
+      }
+    }
+  };
+
+  function extractPois(result: unknown): SearchResult[] {
+    if (typeof result !== "object" || result === null) {
+      return [];
+    }
+    const typedResult = result as {
+      info?: string;
+      poiList?: {
+        pois?: Array<{
+          id: string;
+          name: string;
+          address: string;
+          location: { lat: number; lng: number };
+          adcode: string;
+          cityname: string;
+        }>;
+      };
+    };
+
+    if (typedResult.info !== "OK" || !typedResult.poiList?.pois) {
+      return [];
+    }
+
+    return typedResult.poiList.pois.map((poi) => ({
+      id: poi.id,
+      name: poi.name,
+      address: poi.address,
+      location: {
+        lat: poi.location.lat,
+        lng: poi.location.lng,
+      },
+      adcode: poi.adcode,
+      cityname: poi.cityname,
+    }));
+  }
 
   return (
     <div className="p-4 border-b border-border bg-surface z-10">
@@ -86,6 +116,7 @@ export function MapSearch({ onSelect }: MapSearchProps) {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Search location..."
           className="w-full bg-background border border-border rounded pl-9 pr-4 py-2 text-text-primary focus:border-white focus:outline-none transition-colors"
         />
@@ -129,6 +160,9 @@ export function MapSearch({ onSelect }: MapSearchProps) {
           ))}
         </div>
       )}
+
+      {/* 空态提示 */}
+      {emptyMessage && <p className="mt-2 text-xs text-text-muted px-4">{emptyMessage}</p>}
     </div>
   );
 }

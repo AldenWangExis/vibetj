@@ -9,26 +9,19 @@ interface MapSidebarProps {
   markers: MapMarker[];
   selectedMarkerId: number | null;
   onMarkerSelect: (id: number) => void;
-  isSearching: boolean;
-  setIsSearching: (v: boolean) => void;
   tempMarker: MapCoordinate | null;
-  setTempMarker: (coord: MapCoordinate | null) => void;
+  onSearchSelect: (coord: MapCoordinate) => void;
+  onTempClear: () => void;
 }
 
 export function MapSidebar({
   markers,
   selectedMarkerId,
   onMarkerSelect,
-  // isSearching, // 目前在组件内部处理
-  // setIsSearching,
   tempMarker,
-  setTempMarker,
+  onSearchSelect,
+  onTempClear,
 }: MapSidebarProps) {
-  const handleSearchSelect = (coord: MapCoordinate) => {
-    // 搜索选中后，设置为临时标记，进入保存模式
-    setTempMarker(coord);
-  };
-
   return (
     <aside className="w-80 h-full bg-background border-r border-border flex flex-col z-10">
       {/* 标题栏 */}
@@ -42,16 +35,12 @@ export function MapSidebar({
       {tempMarker ? (
         // 保存模式
         <div className="p-4">
-          <SaveLocationForm
-            location={tempMarker}
-            onCancel={() => setTempMarker(null)}
-            onSuccess={() => setTempMarker(null)}
-          />
+          <SaveLocationForm location={tempMarker} onCancel={onTempClear} onSuccess={onTempClear} />
         </div>
       ) : (
         // 列表模式
         <>
-          <MapSearch onSelect={handleSearchSelect} />
+          <MapSearch onSelect={onSearchSelect} />
           <LocationList
             markers={markers}
             selectedMarkerId={selectedMarkerId}

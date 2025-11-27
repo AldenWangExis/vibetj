@@ -12,18 +12,31 @@ interface MapClientWrapperProps {
 export function MapClientWrapper({ initialMarkers }: MapClientWrapperProps) {
   // 状态管理
   const [selectedMarkerId, setSelectedMarkerId] = useState<number | null>(null);
-  const [isSearching, setIsSearching] = useState(false);
   const [tempMarker, setTempMarker] = useState<MapCoordinate | null>(null);
+  const [shouldFocusTemp, setShouldFocusTemp] = useState(false);
 
   // 处理标记点击
   const handleMarkerSelect = (id: number) => {
     setSelectedMarkerId(id);
   };
 
+  // 搜索结果命中
+  const handleSearchSelect = (coord: MapCoordinate) => {
+    setTempMarker(coord);
+    setSelectedMarkerId(null);
+    setShouldFocusTemp(true);
+  };
+
+  const clearTempMarker = () => {
+    setTempMarker(null);
+    setShouldFocusTemp(false);
+  };
+
   // 处理地图点击 (用于添加新点)
   const handleMapClick = (coord: MapCoordinate) => {
     setTempMarker(coord);
     setSelectedMarkerId(null); // 取消选中现有标记
+    setShouldFocusTemp(false);
   };
 
   return (
@@ -33,10 +46,9 @@ export function MapClientWrapper({ initialMarkers }: MapClientWrapperProps) {
         markers={initialMarkers}
         selectedMarkerId={selectedMarkerId}
         onMarkerSelect={handleMarkerSelect}
-        isSearching={isSearching}
-        setIsSearching={setIsSearching}
         tempMarker={tempMarker}
-        setTempMarker={setTempMarker}
+        onSearchSelect={handleSearchSelect}
+        onTempClear={clearTempMarker}
       />
 
       {/* 地图画布 */}
@@ -46,6 +58,8 @@ export function MapClientWrapper({ initialMarkers }: MapClientWrapperProps) {
           selectedMarkerId={selectedMarkerId}
           onMarkerSelect={handleMarkerSelect}
           tempMarker={tempMarker}
+          shouldFocusTemp={shouldFocusTemp}
+          onTempFocusHandled={() => setShouldFocusTemp(false)}
           onMapClick={handleMapClick}
         />
       </div>

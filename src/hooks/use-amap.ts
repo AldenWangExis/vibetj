@@ -128,6 +128,7 @@ export function useAMap(containerId: string, options: UseAMapOptions = {}): UseA
         mapRef.current = null;
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerId]);
 
   useEffect(() => {
@@ -138,7 +139,7 @@ export function useAMap(containerId: string, options: UseAMapOptions = {}): UseA
     if (options.zoom) {
       mapRef.current.setZoom(options.zoom);
     }
-  }, [options.center, options.zoom]);
+  }, [options.center, options.zoom, options.mapStyle, options.viewMode]);
 
   return {
     map: mapRef.current,
