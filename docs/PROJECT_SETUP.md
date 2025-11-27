@@ -1,6 +1,6 @@
 # VibeTJ - 项目配置与部署指南
 
-创建人: ZHWA
+创建人: Alden
 创建日期: 2025-11-26
 修改日期: 2025-11-26
 参考文档: docs/01_tds.md
@@ -319,5 +319,5 @@ MIT
 
 ## 作者
 
-ZHWA @ VibeTJ Team
+Alden @ VibeTJ Team
 

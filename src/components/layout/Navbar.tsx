@@ -14,7 +14,7 @@
  * - Active Tab: text-foreground (白)
  * - Inactive Tab: text-foreground/60 transition-colors hover:text-foreground/80 (灰变白)
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: Alden | 创建: 2025-11-26
  * 规范: docs/01_tds.md, docs/01_urs.md
  */
 

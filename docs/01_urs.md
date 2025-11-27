@@ -1,7 +1,7 @@
 # VibeTJ - 用户需求说明书 (URS)
 
 **版本号:** v1.0
-**日期:** 2024-11-26
+**日期:** 2025-11-26
 **项目代号:** VibeTJ
 **核心理念:** Industrial Minimalism (工业极简主义), GitOps Driven (GitOps 驱动)
 

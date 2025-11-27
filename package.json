@@ -15,10 +15,12 @@
     "validate": "npm run type-check && npm run lint && npm run format:check"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
     "@octokit/rest": "^22.0.1",
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "drizzle-orm": "^0.44.7",
     "geist": "^1.5.1",
     "lucide-react": "^0.555.0",
     "next": "15.5.6",
@@ -33,12 +35,15 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.22",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.7",
     "eslint": "^9",
     "eslint-config-next": "15.5.6",
     "husky": "^9.1.7",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "tailwindcss": "^3.4.18",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

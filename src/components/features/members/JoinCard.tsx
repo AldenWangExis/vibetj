@@ -10,7 +10,7 @@
  * - 居中布局，强调行动点
  * - 极简风格 (Vercel Style)
  *
- * 作者: ZHWA | 创建: 2024-11-26 | 修改: 2025-11-27
+ * 作者: Alden | 创建: 2025-11-26 | 修改: 2025-11-27
  */
 
 import { Plus, ArrowRight } from "lucide-react";

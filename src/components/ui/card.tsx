@@ -9,7 +9,7 @@
  * - CardContent: 卡片内容
  * - CardFooter: 卡片底部
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: Alden | 创建: 2025-11-26
  * 规范: docs/01_tds.md
  */
 

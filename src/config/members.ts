@@ -9,7 +9,7 @@
  * - customBio: 可选，用于覆盖 GitHub 默认 Bio
  * - 数据富化: 通过 GitHub API 自动获取头像、昵称等信息
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: Alden | 创建: 2025-11-26
  * 规范: docs/01_tds.md, docs/01_urs.md
  */
 

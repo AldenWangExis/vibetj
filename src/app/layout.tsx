@@ -12,7 +12,7 @@
  * - Server Component
  * - 使用 Geist 字体实现零 CLS 加载
  *
- * 作者: ZHWA | 创建: 2024-11-26 | 修改: 2025-11-27
+ * 作者: Alden | 创建: 2025-11-26 | 修改: 2025-11-27
  * 规范: docs/01_tds.md
  */
 
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: ["VibeTJ", "Team", "Members", "Industrial Minimalism", "Vercel Style"],
-  authors: [{ name: "ZHWA" }],
+  authors: [{ name: "Alden" }],
   creator: "VibeTJ Team",
   metadataBase: new URL(siteConfig.url),
   openGraph: {
@@ -55,7 +55,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
       <body className="font-sans antialiased bg-background text-text-primary min-h-screen relative selection:bg-white/20 flex flex-col">
         {/* Global Background Grid */}
         <div className="fixed inset-0 z-[-1] pointer-events-none">

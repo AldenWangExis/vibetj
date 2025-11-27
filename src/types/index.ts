@@ -6,7 +6,7 @@
  * - GitHubUser: GitHub API 返回的用户数据
  * - MemberProfile: 最终视图模型
  *
- * 作者: ZHWA | 创建: 2024-11-26
+ * 作者: Alden | 创建: 2025-11-26
  * 规范: docs/01_tds.md
  */
 

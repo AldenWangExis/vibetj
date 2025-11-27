@@ -10,7 +10,7 @@
  * - 使用 @radix-ui/react-slot 支持 asChild prop
  * - asChild=true 时，将样式应用到子元素而不是包裹元素
  *
- * 作者: ZHWA | 创建: 2024-11-26 | 修改: 2025-11-26
+ * 作者: Alden | 创建: 2025-11-26 | 修改: 2025-11-26
  * 规范: docs/01_tds.md
  */
 
