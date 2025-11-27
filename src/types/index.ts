@@ -6,7 +6,10 @@
  * - GitHubUser: GitHub API 返回的用户数据
  * - MemberProfile: 最终视图模型
  *
- * 作者: Alden | 创建: 2025-11-26
+ * 模块化类型:
+ * - Map 相关类型: 见 types/map.ts
+ *
+ * 作者: Alden | 创建: 2025-11-26 | 修改: 2025-11-27
  * 规范: docs/01_tds.md
  */
 
@@ -33,3 +36,6 @@ export interface MemberProfile extends MemberConfig {
   profileUrl: string;
   bio: string; // 优先取 customBio，无则取 github bio
 }
+
+// 4. 重导出模块化类型
+export type * from "./map";

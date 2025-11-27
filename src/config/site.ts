@@ -15,6 +15,7 @@ export const siteConfig = {
   nav: [
     { name: "Home", href: "/" as const },
     { name: "Members", href: "/members" as const },
+    { name: "Map", href: "/map" as const },
     { name: "Lab", href: "/lab" as const },
   ],
   links: {

@@ -20,6 +20,13 @@
 # production
 /build
 
+# spec
+.cursor/
+.kiro/
+docs/**/*urs*
+docs/**/*tds*
+docs/**/*fds*
+
 # misc
 .DS_Store
 *.pem
@@ -41,6 +48,3 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# spec
-.cursor/
-.kiro/
