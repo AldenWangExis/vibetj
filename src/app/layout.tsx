@@ -21,6 +21,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Navbar } from "@/components/layout/Navbar";
 import { StatusBar } from "@/components/layout/StatusBar";
+import { GridBackground } from "@/components/ui/GridBackground";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -61,11 +62,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased bg-background text-text-primary min-h-screen relative selection:bg-accent-green/20 selection:text-accent-green flex flex-col overflow-x-hidden">
-        {/* 1. Film Grain (Noise) Overlay - Global */}
-        <div className="fixed inset-0 z-50 pointer-events-none opacity-[0.03] bg-noise-pattern mix-blend-overlay"></div>
-
-        {/* 2. Breathing Grid Background */}
-        <div className="fixed inset-0 z-[-1] pointer-events-none bg-grid-pattern opacity-[0.15] animate-grid-breath [mask-image:linear-gradient(to_bottom,transparent,black,transparent)]"></div>
+        {/* Advanced Interactive Background */}
+        <GridBackground />
 
         <Navbar />
         <main className="relative z-10 flex-1 pb-8">{children}</main>
