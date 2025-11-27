@@ -15,11 +15,12 @@
 
 import { Plus, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { siteConfig } from "@/config/site";
 
 export function JoinCard() {
   return (
     <a
-      href="https://github.com/AldenWangExis/vibetj?tab=readme-ov-file#%E5%A6%82%E4%BD%95%E5%8A%A0%E5%85%A5-vibetj"
+      href={`${siteConfig.links.github}?tab=readme-ov-file#%E5%A6%82%E4%BD%95%E5%8A%A0%E5%85%A5-vibetj`}
       target="_blank"
       rel="noopener noreferrer"
       className="group block h-full"

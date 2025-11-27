@@ -4,23 +4,18 @@
  * 核心功能:
  * - 展示成员头像、昵称、GitHub Handle、自定义签名
  * - 点击卡片跳转至成员的 GitHub 主页
- *
- * 架构设计:
- * - Server Component (纯展示组件，无交互逻辑)
- * - 使用 next/image 优化头像加载 (LCP 优化)
+ * - 使用 SpotlightCard 实现聚光灯效果
  *
  * 样式特征:
- * - Vercel 风格: 边框层级、Hover 高亮
- * - 圆角: rounded-xl (8px)
- * - 交互: Hover 时边框变亮、轻微阴影
+ * - 工业极简风格: 黑白配色，Hover 变色
+ * - 数据化展示: 强调 Handle 和 Bio
  *
  * 作者: Alden | 创建: 2025-11-26 | 修改: 2025-11-27
- * 规范: docs/01_tds.md, docs/01_urs.md
+ * 规范: docs/03_tds.md
  */
 
 import Image from "next/image";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import type { MemberProfile } from "@/types";
 
 interface MemberCardProps {
@@ -30,45 +25,57 @@ interface MemberCardProps {
 
 export function MemberCard({ profile, priority = false }: MemberCardProps) {
   return (
-    <a href={profile.profileUrl} target="_blank" rel="noopener noreferrer" className="group block">
-      <Card className="h-full bg-surface/50 backdrop-blur-sm border-border transition-all duration-300 hover:border-border-hover hover:bg-surface hover:shadow-[0_0_0_1px_rgba(255,255,255,0.1)]">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-4">
-            {/* 头像 */}
-            <Avatar className="h-14 w-14 border border-border">
-              <AvatarImage src={profile.avatarUrl} alt={profile.displayName} asChild>
-                <Image
-                  src={profile.avatarUrl}
-                  alt={profile.displayName}
-                  width={56}
-                  height={56}
-                  priority={priority}
-                />
-              </AvatarImage>
-              <AvatarFallback className="bg-background text-text-secondary">
-                {profile.displayName.slice(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
+    <a
+      href={profile.profileUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group block h-full"
+    >
+      <SpotlightCard className="h-full bg-surface p-6 transition-all duration-300 hover:border-border-hover flex flex-col gap-4">
+        <div className="flex items-start justify-between">
+          {/* 头像 - 视觉设计: System Tint (赛博青滤镜) 
+              默认状态: 单色青、低亮度、高对比，模拟 HUD/全息投影的休眠状态
+              Hover状态: 全彩恢复
+          */}
+          <div className="relative h-16 w-16 overflow-hidden rounded-full border border-border transition-transform duration-300 group-hover:scale-105 group-hover:border-accent-green/50">
+            <Image
+              src={profile.avatarUrl}
+              alt={profile.displayName}
+              fill
+              className="object-cover transition-all duration-500
+                filter grayscale sepia hue-rotate-[170deg] brightness-75 contrast-[1.2] opacity-80
+                group-hover:filter-none group-hover:opacity-100"
+              sizes="64px"
+              priority={priority}
+            />
+          </div>
 
-            {/* 昵称与 Handle */}
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-base text-text-primary tracking-tight truncate group-hover:text-white transition-colors">
-                {profile.displayName}
-              </h3>
-              <p className="text-xs text-text-secondary font-mono group-hover:text-text-muted transition-colors">
-                @{profile.github}
-              </p>
+          {/* Git Status Indicator */}
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider opacity-0 transition-opacity group-hover:opacity-100">
+              Contributor
+            </span>
+            <div className="relative flex h-2 w-2">
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-border group-hover:bg-accent-green transition-colors shadow-[0_0_0_0_rgba(0,255,148,0)] group-hover:shadow-[0_0_8px_rgba(0,255,148,0.6)]"></span>
             </div>
           </div>
-        </CardHeader>
+        </div>
 
-        <CardContent>
-          {/* 自定义签名 */}
-          <p className="text-sm text-text-secondary line-clamp-2 leading-relaxed group-hover:text-text-secondary/80 transition-colors">
-            {profile.bio || "No bio available"}
+        <div className="space-y-1">
+          <h3 className="font-bold text-lg text-text-primary tracking-tight group-hover:text-white transition-colors">
+            {profile.displayName}
+          </h3>
+          <p className="text-xs text-text-code font-mono group-hover:text-accent-green transition-colors">
+            @{profile.github}
           </p>
-        </CardContent>
-      </Card>
+        </div>
+
+        <div className="mt-auto pt-4 border-t border-border/50">
+          <p className="text-sm text-text-secondary leading-relaxed line-clamp-2 font-light group-hover:text-text-primary/90 transition-colors">
+            {profile.bio || "No system bio available."}
+          </p>
+        </div>
+      </SpotlightCard>
     </a>
   );
 }

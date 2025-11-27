@@ -3,81 +3,54 @@
  *
  * 核心功能:
  * - 处理 404 Not Found 错误
- * - 提供友好的错误提示和导航
+ * - 赛博终端风格
  *
- * 架构设计:
- * - Server Component (静态内容)
- * - 遵循 Vercel 工业极简主义风格
- *
- * 触发场景:
- * - 访问不存在的路由
- * - 调用 notFound() 函数
- *
- * 作者: Alden | 创建: 2025-11-26
- * 规范: docs/01_tds.md, docs/01_urs.md
+ * 作者: Alden | 创建: 2025-11-26 | 修改: 2025-11-27
+ * 规范: docs/03_tds.md
  */
 
 import Link from "next/link";
-import { siteConfig } from "@/config/site";
 
 export const metadata = {
-  title: "Page Not Found",
-  description: "The page you are looking for does not exist.",
+  title: "404 - Signal Lost",
+  description: "The requested signal could not be found.",
 };
 
 export default function NotFound() {
   return (
-    <div className="container mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-screen-2xl items-center justify-center px-4">
-      <div className="flex flex-col items-center space-y-8 text-center">
-        {/* 错误代码 */}
-        <div className="space-y-2">
-          <h1 className="font-mono text-6xl font-bold tracking-tight text-text-primary sm:text-7xl md:text-8xl">
-            404
-          </h1>
-          <div className="h-px w-24 bg-border mx-auto" />
-        </div>
+    <div className="container mx-auto flex min-h-[calc(100vh-64px)] items-center justify-center px-4">
+      <div className="w-full max-w-md border border-border bg-surface p-8 md:p-12 relative overflow-hidden">
+        {/* Top Decoration */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-accent-red"></div>
 
-        {/* 错误信息 */}
-        <div className="space-y-2">
-          <h2 className="text-2xl font-semibold tracking-tight text-text-primary">
-            Page Not Found
-          </h2>
-          <p className="max-w-[500px] text-text-secondary">
-            The page you are looking for does not exist or has been moved.
-          </p>
-        </div>
+        <div className="space-y-8 text-center relative z-10">
+          <div className="space-y-2">
+            <h1 className="font-mono text-6xl font-bold tracking-tighter text-white glitch-text">
+              404
+            </h1>
+            <p className="font-mono text-xs text-accent-red uppercase tracking-widest">
+              Signal Lost / Route Unknown
+            </p>
+          </div>
 
-        {/* 导航选项 */}
-        <div className="flex flex-col gap-4 sm:flex-row">
+          <div className="font-mono text-xs text-text-secondary text-left border border-border/50 p-4 bg-black/50">
+            <p>{`> initiating_recovery_protocol...`}</p>
+            <p>{`> scanning_sector...`}</p>
+            <p className="text-accent-red">{`> ERROR: target_coordinates_invalid`}</p>
+            <p>{`> suggesting_alternative_path...`}</p>
+            <span className="inline-block w-2 h-4 bg-accent-red animate-pulse align-middle ml-1"></span>
+          </div>
+
           <Link
             href="/"
-            className="rounded-md bg-text-primary px-6 py-3 text-sm font-semibold text-background transition-colors hover:bg-text-primary/90"
+            className="inline-flex h-10 w-full items-center justify-center border border-text-primary bg-text-primary px-6 text-sm font-bold text-background transition-all hover:bg-transparent hover:text-text-primary"
           >
-            Back to Home
-          </Link>
-          <Link
-            href="/members"
-            className="rounded-md border border-border px-6 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-border-hover"
-          >
-            View Members
+            Return to Base
           </Link>
         </div>
 
-        {/* 快速导航 */}
-        <div className="pt-8">
-          <p className="mb-4 text-sm text-text-secondary">Quick Links</p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            {siteConfig.nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-text-secondary transition-colors hover:text-text-primary"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </div>
+        {/* Background Scanline */}
+        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px] opacity-20"></div>
       </div>
     </div>
   );

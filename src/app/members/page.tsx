@@ -10,13 +10,8 @@
  * - ISR 缓存策略: revalidate = 3600 (1小时)
  * - 流式渲染: 使用 Suspense 包裹 MemberGrid
  *
- * 数据流:
- * 1. 从 config/members.ts 读取静态配置
- * 2. 调用 Service 层获取完整档案
- * 3. 传递给 MemberGrid 渲染
- *
  * 作者: Alden | 创建: 2025-11-26 | 修改: 2025-11-27
- * 规范: docs/01_tds.md, docs/01_urs.md
+ * 规范: docs/03_tds.md
  */
 
 import { Suspense } from "react";
@@ -24,40 +19,49 @@ import { Github } from "lucide-react";
 import { MEMBERS } from "@/config/members";
 import { getAllMemberProfiles } from "@/services/memberService";
 import { MemberGrid } from "@/components/features/members/MemberGrid";
+import { TypewriterText } from "@/components/ui/TypewriterText";
+import { siteConfig } from "@/config/site";
 
 // ISR 缓存策略: 1小时重新验证
 export const revalidate = 3600;
 
 async function MembersContent() {
-  // 调用 Service 层，业务逻辑已封装
   const profiles = await getAllMemberProfiles(MEMBERS);
-
   return <MemberGrid profiles={profiles} />;
 }
 
 export default function MembersPage() {
   return (
-    <div className="container mx-auto max-w-screen-xl px-4 py-12 sm:py-20">
+    <div className="container mx-auto max-w-screen-xl px-6 py-12 sm:py-24">
       {/* 页面标题与操作区 */}
-      <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-16 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between border-b border-border/50 pb-8">
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 sm:text-5xl">
-            Team Members
+          <div className="flex items-center gap-2 text-xs font-mono text-accent-green">
+            <span className="animate-pulse">●</span>
+            <span>SYSTEM::MEMBERS_DIRECTORY</span>
+          </div>
+
+          <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl">
+            Active Builders
           </h1>
-          <p className="text-lg text-text-secondary max-w-[500px] font-light">
-            Meet the people behind VibeTJ. We are a distributed team of developers, designers, and
-            creators.
-          </p>
+
+          <div className="h-6">
+            <TypewriterText
+              text="Distributed intelligence network."
+              className="text-text-secondary font-mono text-sm"
+              minDelay={20}
+            />
+          </div>
         </div>
 
         <a
-          href="https://github.com/AldenWangExis/vibetj#how-to-join-vibetj"
+          href={`${siteConfig.links.github}#how-to-join-vibetj`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex h-10 items-center justify-center rounded-md border border-border bg-black px-6 text-sm font-medium text-text-secondary transition-all hover:text-white hover:border-gray-500 hover:bg-surface"
+          className="group inline-flex h-12 items-center justify-center rounded-none border border-border bg-background px-6 text-xs font-mono uppercase tracking-wider text-text-secondary transition-all hover:bg-surface hover:text-white hover:border-white/40"
         >
-          <Github className="mr-2 h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-          Join via GitHub
+          <Github className="mr-2 h-4 w-4" />
+          <span>Initiate Join Protocol</span>
         </a>
       </div>
 
@@ -69,14 +73,14 @@ export default function MembersPage() {
   );
 }
 
-// 骨架屏组件
+// 骨架屏组件 - 适配 SpotlightCard 风格
 function MembersLoadingSkeleton() {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          className="h-[180px] animate-pulse rounded-lg border border-border bg-surface/50"
+          className="h-[240px] animate-pulse rounded-xl border border-border bg-surface/30"
         />
       ))}
     </div>
