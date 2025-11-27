@@ -36,7 +36,9 @@ export function ActiveBuildersCard({ profiles }: ActiveBuildersCardProps) {
               src={profile.avatarUrl}
               alt={profile.displayName}
               fill
-              className="rounded-full object-cover grayscale transition-all duration-300 group-hover:grayscale-0"
+              className="rounded-full object-cover transition-all duration-500
+                filter grayscale sepia hue-rotate-[170deg] brightness-75 contrast-[1.2] opacity-80
+                group-hover:filter-none group-hover:opacity-100"
               sizes="40px"
             />
           </div>

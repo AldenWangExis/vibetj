@@ -1,4 +1,5 @@
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { siteConfig } from "@/config/site";
 
 export function RawCard() {
   return (
@@ -23,7 +24,7 @@ export function RawCard() {
                 <span className="text-text-primary">&quot;VibeTJ&quot;</span>,
                 <br />
                 <span className="text-text-secondary"> &quot;version&quot;</span>:{" "}
-                <span className="text-accent-blue">&quot;1.0.0&quot;</span>,
+                <span className="text-accent-blue">&quot;{siteConfig.version}&quot;</span>,
                 <br />
                 <span className="text-text-secondary"> &quot;status&quot;</span>:{" "}
                 <span className="text-accent-green">&quot;online&quot;</span>,

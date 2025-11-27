@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/config/site";
 
 export function StatusBar() {
   return (
@@ -10,7 +11,7 @@ export function StatusBar() {
     >
       {/* Left: Build Info (Clickable) */}
       <a
-        href="https://github.com/AldenWangExis/vibetj"
+        href={siteConfig.links.github}
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-4 hover:text-text-primary transition-colors group"
@@ -28,7 +29,7 @@ export function StatusBar() {
           <span>8a2f9c</span>
         </span>
         <span className="hidden sm:flex items-center gap-1.5">
-          <span>v1.0.0</span>
+          <span>v{siteConfig.version}</span>
         </span>
       </a>
 
